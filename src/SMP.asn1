@@ -1,0 +1,71 @@
+SMP DEFINITIONS IMPLICIT TAGS ::= BEGIN
+
+    Auth ::= SEQUENCE {
+        username INTEGER,
+        token OCTET STRING,
+        services SET OF value ENUMERATED {
+            base      (1),
+            groupchat (2),
+            messaging (3)
+        }
+    }
+
+    -- Base Presence
+
+    Person ::= SEQUENCE {
+        name OCTET STRING,
+        surname OCTET STRING,
+        username OCTET STRING,
+        status INTEGER
+    }
+
+    Presence ::= SEQUENCE {
+        size INTEGER,
+        userlist SEQUENCE OF Person
+    }
+
+    Add ::= SEQUENCE {
+        user Person,
+        status INTEGER
+    }
+
+    Confirm ::= SEQUENCE {
+        user Person,
+        type INTEGER
+    }
+
+    -- Group Chat
+
+    Room ::= SEQUENCE {
+        name OCTET STRING,
+        id INTEGER
+    }
+
+    Create ::= SEQUENCE {
+        room INTEGER,
+        description INTEGER,
+        acl INTEGER,
+        settings INTEGER
+    }
+
+    Join ::= SEQUENCE {
+        room INTEGER,
+        answer BOOLEAN
+    }
+
+    RoomEvent ::= SEQUENCE {
+        room INTEGER,
+        message OCTET STRING,
+        author Person
+    }
+
+    -- Messaging
+
+    Message ::= SEQUENCE {
+        author Person,
+        room INTEGER,
+        body OCTET STRING,
+        status INTEGER
+    }
+
+END
