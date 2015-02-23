@@ -1,0 +1,9 @@
+{application, smp,
+ [
+  {description, "SMP Simple Messaging Protocol"},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [kernel, stdlib]},
+  {mod, { smp_app, []}},
+  {env, []}
+ ]}.
