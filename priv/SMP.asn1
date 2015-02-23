@@ -1,5 +1,7 @@
 SMP DEFINITIONS IMPLICIT TAGS ::= BEGIN
 
+    -- Auth
+
     Auth ::= SEQUENCE {
         username INTEGER,
         token OCTET STRING,
@@ -13,6 +15,7 @@ SMP DEFINITIONS IMPLICIT TAGS ::= BEGIN
     -- Base Presence
 
     Person ::= SEQUENCE {
+        id INTEGER,
         name OCTET STRING,
         surname OCTET STRING,
         username OCTET STRING,
@@ -49,23 +52,56 @@ SMP DEFINITIONS IMPLICIT TAGS ::= BEGIN
     }
 
     Join ::= SEQUENCE {
+        user Person,
         room INTEGER,
         answer BOOLEAN
     }
 
     RoomEvent ::= SEQUENCE {
+        id INTEGER,
         room INTEGER,
         message OCTET STRING,
         author Person
     }
 
-    -- Messaging
-
-    Message ::= SEQUENCE {
+    RoomMessage ::= SEQUENCE {
+        id INTEGER,
         author Person,
         room INTEGER,
         body OCTET STRING,
         status INTEGER
+    }
+
+    -- Messaging
+
+    Message ::= SEQUENCE {
+        id OCTET STRING,
+        author Person,
+        body OCTET STRING,
+        status INTEGER
+    }
+
+    Typing ::= SEQUENCE {
+        author Person
+    }
+
+    -- API
+
+    Retrieve ::= SEQUENCE {
+        id OCTET STRING,
+        chat OCTET STRING
+    }
+
+    Mark ::= SEQUENCE {
+        id OCTET STRING,
+        room OCTET STRING,
+        status INTEGER -- DELETE, ARCHIVE, FAVOURITE, SHARED
+    }
+
+    Search ::= SEQUENCE {
+        id OCTET STRING,
+        body OCTET STRING,
+        author OCTET STRING
     }
 
 END
