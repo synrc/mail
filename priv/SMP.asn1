@@ -85,6 +85,11 @@ SMP DEFINITIONS IMPLICIT TAGS ::= BEGIN
         author Person
     }
 
+    RoomTyping ::= SEQUENCE {
+        room INTEGER,
+        author Person
+    }
+
     -- API
 
     Retrieve ::= SEQUENCE {

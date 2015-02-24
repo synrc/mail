@@ -28,6 +28,7 @@
 'enc_RoomMessage'/2,
 'enc_Message'/2,
 'enc_Typing'/2,
+'enc_RoomTyping'/2,
 'enc_Retrieve'/2,
 'enc_Mark'/2,
 'enc_Search'/2
@@ -46,6 +47,7 @@
 'dec_RoomMessage'/2,
 'dec_Message'/2,
 'dec_Typing'/2,
+'dec_RoomTyping'/2,
 'dec_Retrieve'/2,
 'dec_Mark'/2,
 'dec_Search'/2
@@ -102,6 +104,7 @@ encode_disp('RoomEvent',Data) -> 'enc_RoomEvent'(Data);
 encode_disp('RoomMessage',Data) -> 'enc_RoomMessage'(Data);
 encode_disp('Message',Data) -> 'enc_Message'(Data);
 encode_disp('Typing',Data) -> 'enc_Typing'(Data);
+encode_disp('RoomTyping',Data) -> 'enc_RoomTyping'(Data);
 encode_disp('Retrieve',Data) -> 'enc_Retrieve'(Data);
 encode_disp('Mark',Data) -> 'enc_Mark'(Data);
 encode_disp('Search',Data) -> 'enc_Search'(Data);
@@ -120,6 +123,7 @@ decode_disp('RoomEvent',Data) -> 'dec_RoomEvent'(Data);
 decode_disp('RoomMessage',Data) -> 'dec_RoomMessage'(Data);
 decode_disp('Message',Data) -> 'dec_Message'(Data);
 decode_disp('Typing',Data) -> 'dec_Typing'(Data);
+decode_disp('RoomTyping',Data) -> 'dec_RoomTyping'(Data);
 decode_disp('Retrieve',Data) -> 'dec_Retrieve'(Data);
 decode_disp('Mark',Data) -> 'dec_Mark'(Data);
 decode_disp('Search',Data) -> 'dec_Search'(Data);
@@ -966,6 +970,58 @@ case Tlv2 of
 [] -> true;_ -> exit({error,{asn1, {unexpected,Tlv2}}}) % extra fields not allowed
 end,
    {'Typing', Term1}.
+
+
+
+%%================================
+%%  RoomTyping
+%%================================
+'enc_RoomTyping'(Val) ->
+    'enc_RoomTyping'(Val, [<<48>>]).
+
+'enc_RoomTyping'(Val, TagIn) ->
+{_,Cindex1, Cindex2} = Val,
+
+%%-------------------------------------------------
+%% attribute room(1) with type INTEGER
+%%-------------------------------------------------
+   {EncBytes1,EncLen1} = encode_integer(Cindex1, [<<2>>]),
+
+%%-------------------------------------------------
+%% attribute author(2)   External SMP:Person
+%%-------------------------------------------------
+   {EncBytes2,EncLen2} = 'enc_Person'(Cindex2, [<<48>>]),
+
+   BytesSoFar = [EncBytes1, EncBytes2],
+LenSoFar = EncLen1 + EncLen2,
+encode_tags(TagIn, BytesSoFar, LenSoFar).
+
+
+'dec_RoomTyping'(Tlv) ->
+   'dec_RoomTyping'(Tlv, [16]).
+
+'dec_RoomTyping'(Tlv, TagIn) ->
+   %%-------------------------------------------------
+   %% decode tag and length
+   %%-------------------------------------------------
+Tlv1 = match_tags(Tlv, TagIn),
+
+%%-------------------------------------------------
+%% attribute room(1) with type INTEGER
+%%-------------------------------------------------
+[V1|Tlv2] = Tlv1,
+Term1 = decode_integer(V1, [2]),
+
+%%-------------------------------------------------
+%% attribute author(2)   External SMP:Person
+%%-------------------------------------------------
+[V2|Tlv3] = Tlv2,
+Term2 = 'dec_Person'(V2, [16]),
+
+case Tlv3 of
+[] -> true;_ -> exit({error,{asn1, {unexpected,Tlv3}}}) % extra fields not allowed
+end,
+   {'RoomTyping', Term1, Term2}.
 
 
 

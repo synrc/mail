@@ -44,6 +44,9 @@ id, author, body, status}).
 -record('Typing',{
 author}).
 
+-record('RoomTyping',{
+room, author}).
+
 -record('Retrieve',{
 id, chat}).
 
