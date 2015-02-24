@@ -183,7 +183,7 @@ encode_tags(TagIn, BytesSoFar, LenSoFar).
       {EncBytes,EncLen} = 'enc_Auth_services_components'(Val,[],0),
    encode_tags(TagIn, EncBytes, EncLen).
 
-'enc_Auth_services_components'([], AccBytes, AccLen) -> 
+'enc_Auth_services_components'([], AccBytes, AccLen) ->
    {lists:reverse(AccBytes),AccLen};
 
 'enc_Auth_services_components'([H|T],AccBytes, AccLen) ->
@@ -197,7 +197,7 @@ end,
 
 'dec_Auth_services'(Tlv, TagIn) ->
    %%-------------------------------------------------
-   %% decode tag and length 
+   %% decode tag and length
    %%-------------------------------------------------
 Tlv1 = match_tags(Tlv, TagIn),
 [case decode_integer(V1, [10]) of
@@ -215,26 +215,26 @@ end || V1 <- Tlv1].
 
 'dec_Auth'(Tlv, TagIn) ->
    %%-------------------------------------------------
-   %% decode tag and length 
+   %% decode tag and length
    %%-------------------------------------------------
 Tlv1 = match_tags(Tlv, TagIn),
 
 %%-------------------------------------------------
 %% attribute username(1) with type INTEGER
 %%-------------------------------------------------
-[V1|Tlv2] = Tlv1, 
+[V1|Tlv2] = Tlv1,
 Term1 = decode_integer(V1, [2]),
 
 %%-------------------------------------------------
 %% attribute token(2) with type OCTET STRING
 %%-------------------------------------------------
-[V2|Tlv3] = Tlv2, 
+[V2|Tlv3] = Tlv2,
 Term2 = decode_octet_string(V2, [4]),
 
 %%-------------------------------------------------
 %% attribute services(3) with type SET OF
 %%-------------------------------------------------
-[V3|Tlv4] = Tlv3, 
+[V3|Tlv4] = Tlv3,
 Term3 = 'dec_Auth_services'(V3, [17]),
 
 case Tlv4 of
@@ -288,38 +288,38 @@ encode_tags(TagIn, BytesSoFar, LenSoFar).
 
 'dec_Person'(Tlv, TagIn) ->
    %%-------------------------------------------------
-   %% decode tag and length 
+   %% decode tag and length
    %%-------------------------------------------------
 Tlv1 = match_tags(Tlv, TagIn),
 
 %%-------------------------------------------------
 %% attribute id(1) with type INTEGER
 %%-------------------------------------------------
-[V1|Tlv2] = Tlv1, 
+[V1|Tlv2] = Tlv1,
 Term1 = decode_integer(V1, [2]),
 
 %%-------------------------------------------------
 %% attribute name(2) with type OCTET STRING
 %%-------------------------------------------------
-[V2|Tlv3] = Tlv2, 
+[V2|Tlv3] = Tlv2,
 Term2 = decode_octet_string(V2, [4]),
 
 %%-------------------------------------------------
 %% attribute surname(3) with type OCTET STRING
 %%-------------------------------------------------
-[V3|Tlv4] = Tlv3, 
+[V3|Tlv4] = Tlv3,
 Term3 = decode_octet_string(V3, [4]),
 
 %%-------------------------------------------------
 %% attribute username(4) with type OCTET STRING
 %%-------------------------------------------------
-[V4|Tlv5] = Tlv4, 
+[V4|Tlv5] = Tlv4,
 Term4 = decode_octet_string(V4, [4]),
 
 %%-------------------------------------------------
 %% attribute status(5) with type INTEGER
 %%-------------------------------------------------
-[V5|Tlv6] = Tlv5, 
+[V5|Tlv6] = Tlv5,
 Term5 = decode_integer(V5, [2]),
 
 case Tlv6 of
@@ -361,7 +361,7 @@ encode_tags(TagIn, BytesSoFar, LenSoFar).
       {EncBytes,EncLen} = 'enc_Presence_userlist_components'(Val,[],0),
    encode_tags(TagIn, EncBytes, EncLen).
 
-'enc_Presence_userlist_components'([], AccBytes, AccLen) -> 
+'enc_Presence_userlist_components'([], AccBytes, AccLen) ->
    {lists:reverse(AccBytes),AccLen};
 
 'enc_Presence_userlist_components'([H|T],AccBytes, AccLen) ->
@@ -370,7 +370,7 @@ encode_tags(TagIn, BytesSoFar, LenSoFar).
 
 'dec_Presence_userlist'(Tlv, TagIn) ->
    %%-------------------------------------------------
-   %% decode tag and length 
+   %% decode tag and length
    %%-------------------------------------------------
 Tlv1 = match_tags(Tlv, TagIn),
 ['dec_Person'(V1, [16]) || V1 <- Tlv1].
@@ -383,20 +383,20 @@ Tlv1 = match_tags(Tlv, TagIn),
 
 'dec_Presence'(Tlv, TagIn) ->
    %%-------------------------------------------------
-   %% decode tag and length 
+   %% decode tag and length
    %%-------------------------------------------------
 Tlv1 = match_tags(Tlv, TagIn),
 
 %%-------------------------------------------------
 %% attribute size(1) with type INTEGER
 %%-------------------------------------------------
-[V1|Tlv2] = Tlv1, 
+[V1|Tlv2] = Tlv1,
 Term1 = decode_integer(V1, [2]),
 
 %%-------------------------------------------------
 %% attribute userlist(2) with type SEQUENCE OF
 %%-------------------------------------------------
-[V2|Tlv3] = Tlv2, 
+[V2|Tlv3] = Tlv2,
 Term2 = 'dec_Presence_userlist'(V2, [16]),
 
 case Tlv3 of
@@ -435,20 +435,20 @@ encode_tags(TagIn, BytesSoFar, LenSoFar).
 
 'dec_Add'(Tlv, TagIn) ->
    %%-------------------------------------------------
-   %% decode tag and length 
+   %% decode tag and length
    %%-------------------------------------------------
 Tlv1 = match_tags(Tlv, TagIn),
 
 %%-------------------------------------------------
 %% attribute user(1)   External SMP:Person
 %%-------------------------------------------------
-[V1|Tlv2] = Tlv1, 
+[V1|Tlv2] = Tlv1,
 Term1 = 'dec_Person'(V1, [16]),
 
 %%-------------------------------------------------
 %% attribute status(2) with type INTEGER
 %%-------------------------------------------------
-[V2|Tlv3] = Tlv2, 
+[V2|Tlv3] = Tlv2,
 Term2 = decode_integer(V2, [2]),
 
 case Tlv3 of
@@ -487,20 +487,20 @@ encode_tags(TagIn, BytesSoFar, LenSoFar).
 
 'dec_Confirm'(Tlv, TagIn) ->
    %%-------------------------------------------------
-   %% decode tag and length 
+   %% decode tag and length
    %%-------------------------------------------------
 Tlv1 = match_tags(Tlv, TagIn),
 
 %%-------------------------------------------------
 %% attribute user(1)   External SMP:Person
 %%-------------------------------------------------
-[V1|Tlv2] = Tlv1, 
+[V1|Tlv2] = Tlv1,
 Term1 = 'dec_Person'(V1, [16]),
 
 %%-------------------------------------------------
 %% attribute type(2) with type INTEGER
 %%-------------------------------------------------
-[V2|Tlv3] = Tlv2, 
+[V2|Tlv3] = Tlv2,
 Term2 = decode_integer(V2, [2]),
 
 case Tlv3 of
@@ -539,20 +539,20 @@ encode_tags(TagIn, BytesSoFar, LenSoFar).
 
 'dec_Room'(Tlv, TagIn) ->
    %%-------------------------------------------------
-   %% decode tag and length 
+   %% decode tag and length
    %%-------------------------------------------------
 Tlv1 = match_tags(Tlv, TagIn),
 
 %%-------------------------------------------------
 %% attribute name(1) with type OCTET STRING
 %%-------------------------------------------------
-[V1|Tlv2] = Tlv1, 
+[V1|Tlv2] = Tlv1,
 Term1 = decode_octet_string(V1, [4]),
 
 %%-------------------------------------------------
 %% attribute id(2) with type INTEGER
 %%-------------------------------------------------
-[V2|Tlv3] = Tlv2, 
+[V2|Tlv3] = Tlv2,
 Term2 = decode_integer(V2, [2]),
 
 case Tlv3 of
@@ -601,32 +601,32 @@ encode_tags(TagIn, BytesSoFar, LenSoFar).
 
 'dec_Create'(Tlv, TagIn) ->
    %%-------------------------------------------------
-   %% decode tag and length 
+   %% decode tag and length
    %%-------------------------------------------------
 Tlv1 = match_tags(Tlv, TagIn),
 
 %%-------------------------------------------------
 %% attribute room(1) with type INTEGER
 %%-------------------------------------------------
-[V1|Tlv2] = Tlv1, 
+[V1|Tlv2] = Tlv1,
 Term1 = decode_integer(V1, [2]),
 
 %%-------------------------------------------------
 %% attribute description(2) with type INTEGER
 %%-------------------------------------------------
-[V2|Tlv3] = Tlv2, 
+[V2|Tlv3] = Tlv2,
 Term2 = decode_integer(V2, [2]),
 
 %%-------------------------------------------------
 %% attribute acl(3) with type INTEGER
 %%-------------------------------------------------
-[V3|Tlv4] = Tlv3, 
+[V3|Tlv4] = Tlv3,
 Term3 = decode_integer(V3, [2]),
 
 %%-------------------------------------------------
 %% attribute settings(4) with type INTEGER
 %%-------------------------------------------------
-[V4|Tlv5] = Tlv4, 
+[V4|Tlv5] = Tlv4,
 Term4 = decode_integer(V4, [2]),
 
 case Tlv5 of
@@ -670,26 +670,26 @@ encode_tags(TagIn, BytesSoFar, LenSoFar).
 
 'dec_Join'(Tlv, TagIn) ->
    %%-------------------------------------------------
-   %% decode tag and length 
+   %% decode tag and length
    %%-------------------------------------------------
 Tlv1 = match_tags(Tlv, TagIn),
 
 %%-------------------------------------------------
 %% attribute user(1)   External SMP:Person
 %%-------------------------------------------------
-[V1|Tlv2] = Tlv1, 
+[V1|Tlv2] = Tlv1,
 Term1 = 'dec_Person'(V1, [16]),
 
 %%-------------------------------------------------
 %% attribute room(2) with type INTEGER
 %%-------------------------------------------------
-[V2|Tlv3] = Tlv2, 
+[V2|Tlv3] = Tlv2,
 Term2 = decode_integer(V2, [2]),
 
 %%-------------------------------------------------
 %% attribute answer(3) with type BOOLEAN
 %%-------------------------------------------------
-[V3|Tlv4] = Tlv3, 
+[V3|Tlv4] = Tlv3,
 Term3 = decode_boolean(V3, [1]),
 
 case Tlv4 of
@@ -738,32 +738,32 @@ encode_tags(TagIn, BytesSoFar, LenSoFar).
 
 'dec_RoomEvent'(Tlv, TagIn) ->
    %%-------------------------------------------------
-   %% decode tag and length 
+   %% decode tag and length
    %%-------------------------------------------------
 Tlv1 = match_tags(Tlv, TagIn),
 
 %%-------------------------------------------------
 %% attribute id(1) with type INTEGER
 %%-------------------------------------------------
-[V1|Tlv2] = Tlv1, 
+[V1|Tlv2] = Tlv1,
 Term1 = decode_integer(V1, [2]),
 
 %%-------------------------------------------------
 %% attribute room(2) with type INTEGER
 %%-------------------------------------------------
-[V2|Tlv3] = Tlv2, 
+[V2|Tlv3] = Tlv2,
 Term2 = decode_integer(V2, [2]),
 
 %%-------------------------------------------------
 %% attribute message(3) with type OCTET STRING
 %%-------------------------------------------------
-[V3|Tlv4] = Tlv3, 
+[V3|Tlv4] = Tlv3,
 Term3 = decode_octet_string(V3, [4]),
 
 %%-------------------------------------------------
 %% attribute author(4)   External SMP:Person
 %%-------------------------------------------------
-[V4|Tlv5] = Tlv4, 
+[V4|Tlv5] = Tlv4,
 Term4 = 'dec_Person'(V4, [16]),
 
 case Tlv5 of
@@ -817,38 +817,38 @@ encode_tags(TagIn, BytesSoFar, LenSoFar).
 
 'dec_RoomMessage'(Tlv, TagIn) ->
    %%-------------------------------------------------
-   %% decode tag and length 
+   %% decode tag and length
    %%-------------------------------------------------
 Tlv1 = match_tags(Tlv, TagIn),
 
 %%-------------------------------------------------
 %% attribute id(1) with type INTEGER
 %%-------------------------------------------------
-[V1|Tlv2] = Tlv1, 
+[V1|Tlv2] = Tlv1,
 Term1 = decode_integer(V1, [2]),
 
 %%-------------------------------------------------
 %% attribute author(2)   External SMP:Person
 %%-------------------------------------------------
-[V2|Tlv3] = Tlv2, 
+[V2|Tlv3] = Tlv2,
 Term2 = 'dec_Person'(V2, [16]),
 
 %%-------------------------------------------------
 %% attribute room(3) with type INTEGER
 %%-------------------------------------------------
-[V3|Tlv4] = Tlv3, 
+[V3|Tlv4] = Tlv3,
 Term3 = decode_integer(V3, [2]),
 
 %%-------------------------------------------------
 %% attribute body(4) with type OCTET STRING
 %%-------------------------------------------------
-[V4|Tlv5] = Tlv4, 
+[V4|Tlv5] = Tlv4,
 Term4 = decode_octet_string(V4, [4]),
 
 %%-------------------------------------------------
 %% attribute status(5) with type INTEGER
 %%-------------------------------------------------
-[V5|Tlv6] = Tlv5, 
+[V5|Tlv6] = Tlv5,
 Term5 = decode_integer(V5, [2]),
 
 case Tlv6 of
@@ -897,32 +897,32 @@ encode_tags(TagIn, BytesSoFar, LenSoFar).
 
 'dec_Message'(Tlv, TagIn) ->
    %%-------------------------------------------------
-   %% decode tag and length 
+   %% decode tag and length
    %%-------------------------------------------------
 Tlv1 = match_tags(Tlv, TagIn),
 
 %%-------------------------------------------------
 %% attribute id(1) with type OCTET STRING
 %%-------------------------------------------------
-[V1|Tlv2] = Tlv1, 
+[V1|Tlv2] = Tlv1,
 Term1 = decode_octet_string(V1, [4]),
 
 %%-------------------------------------------------
 %% attribute author(2)   External SMP:Person
 %%-------------------------------------------------
-[V2|Tlv3] = Tlv2, 
+[V2|Tlv3] = Tlv2,
 Term2 = 'dec_Person'(V2, [16]),
 
 %%-------------------------------------------------
 %% attribute body(3) with type OCTET STRING
 %%-------------------------------------------------
-[V3|Tlv4] = Tlv3, 
+[V3|Tlv4] = Tlv3,
 Term3 = decode_octet_string(V3, [4]),
 
 %%-------------------------------------------------
 %% attribute status(4) with type INTEGER
 %%-------------------------------------------------
-[V4|Tlv5] = Tlv4, 
+[V4|Tlv5] = Tlv4,
 Term4 = decode_integer(V4, [2]),
 
 case Tlv5 of
@@ -956,14 +956,14 @@ encode_tags(TagIn, BytesSoFar, LenSoFar).
 
 'dec_Typing'(Tlv, TagIn) ->
    %%-------------------------------------------------
-   %% decode tag and length 
+   %% decode tag and length
    %%-------------------------------------------------
 Tlv1 = match_tags(Tlv, TagIn),
 
 %%-------------------------------------------------
 %% attribute author(1)   External SMP:Person
 %%-------------------------------------------------
-[V1|Tlv2] = Tlv1, 
+[V1|Tlv2] = Tlv1,
 Term1 = 'dec_Person'(V1, [16]),
 
 case Tlv2 of
@@ -1054,20 +1054,20 @@ encode_tags(TagIn, BytesSoFar, LenSoFar).
 
 'dec_Retrieve'(Tlv, TagIn) ->
    %%-------------------------------------------------
-   %% decode tag and length 
+   %% decode tag and length
    %%-------------------------------------------------
 Tlv1 = match_tags(Tlv, TagIn),
 
 %%-------------------------------------------------
 %% attribute id(1) with type OCTET STRING
 %%-------------------------------------------------
-[V1|Tlv2] = Tlv1, 
+[V1|Tlv2] = Tlv1,
 Term1 = decode_octet_string(V1, [4]),
 
 %%-------------------------------------------------
 %% attribute chat(2) with type OCTET STRING
 %%-------------------------------------------------
-[V2|Tlv3] = Tlv2, 
+[V2|Tlv3] = Tlv2,
 Term2 = decode_octet_string(V2, [4]),
 
 case Tlv3 of
@@ -1111,26 +1111,26 @@ encode_tags(TagIn, BytesSoFar, LenSoFar).
 
 'dec_Mark'(Tlv, TagIn) ->
    %%-------------------------------------------------
-   %% decode tag and length 
+   %% decode tag and length
    %%-------------------------------------------------
 Tlv1 = match_tags(Tlv, TagIn),
 
 %%-------------------------------------------------
 %% attribute id(1) with type OCTET STRING
 %%-------------------------------------------------
-[V1|Tlv2] = Tlv1, 
+[V1|Tlv2] = Tlv1,
 Term1 = decode_octet_string(V1, [4]),
 
 %%-------------------------------------------------
 %% attribute room(2) with type OCTET STRING
 %%-------------------------------------------------
-[V2|Tlv3] = Tlv2, 
+[V2|Tlv3] = Tlv2,
 Term2 = decode_octet_string(V2, [4]),
 
 %%-------------------------------------------------
 %% attribute status(3) with type INTEGER
 %%-------------------------------------------------
-[V3|Tlv4] = Tlv3, 
+[V3|Tlv4] = Tlv3,
 Term3 = decode_integer(V3, [2]),
 
 case Tlv4 of
@@ -1174,26 +1174,26 @@ encode_tags(TagIn, BytesSoFar, LenSoFar).
 
 'dec_Search'(Tlv, TagIn) ->
    %%-------------------------------------------------
-   %% decode tag and length 
+   %% decode tag and length
    %%-------------------------------------------------
 Tlv1 = match_tags(Tlv, TagIn),
 
 %%-------------------------------------------------
 %% attribute id(1) with type OCTET STRING
 %%-------------------------------------------------
-[V1|Tlv2] = Tlv1, 
+[V1|Tlv2] = Tlv1,
 Term1 = decode_octet_string(V1, [4]),
 
 %%-------------------------------------------------
 %% attribute body(2) with type OCTET STRING
 %%-------------------------------------------------
-[V2|Tlv3] = Tlv2, 
+[V2|Tlv3] = Tlv2,
 Term2 = decode_octet_string(V2, [4]),
 
 %%-------------------------------------------------
 %% attribute author(3) with type OCTET STRING
 %%-------------------------------------------------
-[V3|Tlv4] = Tlv3, 
+[V3|Tlv4] = Tlv3,
 Term3 = decode_octet_string(V3, [4]),
 
 case Tlv4 of
