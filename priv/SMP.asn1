@@ -27,7 +27,7 @@ SMP DEFINITIONS IMPLICIT TAGS ::= BEGIN
         userlist SEQUENCE OF Person
     }
 
-    Add ::= SEQUENCE {
+    Friend ::= SEQUENCE {
         user Person,
         status INTEGER
     }
@@ -40,11 +40,6 @@ SMP DEFINITIONS IMPLICIT TAGS ::= BEGIN
     -- Group Chat
 
     Room ::= SEQUENCE {
-        name OCTET STRING,
-        id INTEGER
-    }
-
-    Create ::= SEQUENCE {
         room INTEGER,
         description INTEGER,
         acl INTEGER,
@@ -57,24 +52,16 @@ SMP DEFINITIONS IMPLICIT TAGS ::= BEGIN
         answer BOOLEAN
     }
 
-    RoomEvent ::= SEQUENCE {
+    Public ::= SEQUENCE {
         id INTEGER,
         room INTEGER,
         message OCTET STRING,
         author Person
     }
 
-    RoomMessage ::= SEQUENCE {
-        id INTEGER,
-        author Person,
-        room INTEGER,
-        body OCTET STRING,
-        status INTEGER
-    }
-
     -- Messaging
 
-    Message ::= SEQUENCE {
+    Private ::= SEQUENCE {
         id OCTET STRING,
         author Person,
         body OCTET STRING,
@@ -82,11 +69,6 @@ SMP DEFINITIONS IMPLICIT TAGS ::= BEGIN
     }
 
     Typing ::= SEQUENCE {
-        author Person
-    }
-
-    RoomTyping ::= SEQUENCE {
-        room INTEGER,
         author Person
     }
 
