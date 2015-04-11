@@ -7,10 +7,10 @@
 -asn1_info([{vsn,'3.0.2'},
             {module,'SMP'},
             {options,[warnings,ber,errors,
- {cwd,"/Users/5HT/depot/synrc/smp/priv"},
- {outdir,"/Users/5HT/depot/synrc/smp/priv"},
+ {cwd,"/Users/5HT/depot/synrc/roster/priv"},
+ {outdir,"/Users/5HT/depot/synrc/roster/priv"},
  {i,"."},
- {i,"/Users/5HT/depot/synrc/smp/priv"}]}]).
+ {i,"/Users/5HT/depot/synrc/roster/priv"}]}]).
 
 -export([encoding_rule/0,bit_string_format/0,
          legacy_erlang_types/0]).
