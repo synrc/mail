@@ -1,0 +1,9 @@
+{application, roster,
+ [
+  {description, "ROSTER Simple Messaging Protocol"},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [kernel, stdlib, kvs]},
+  {mod, { roster_app, []}},
+  {env, []}
+ ]}.

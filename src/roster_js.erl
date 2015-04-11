@@ -1,4 +1,4 @@
--module(smp_js).
+-module(roster_js).
 -compile({parse_transform, shen}).
 -compile(export_all).
 -jsmacro([auth/3]).

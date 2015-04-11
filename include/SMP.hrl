@@ -3,22 +3,22 @@
 %% SEQUENCE and SET, and macro definitions for each value
 %% definition,in module SMP
 
-
-
 -ifndef(_SMP_HRL_).
 -define(_SMP_HRL_, true).
 
+-include_lib("kvs/include/kvs.hrl").
+
 -record('Auth',{username, token, services}).
--record('Person',{id, name, surname, username, status}).
+-record('Person',{?ITERATOR(feed), name, surname, username, status}).
 -record('Presence',{size, userlist}).
--record('Friend',{user, status}).
--record('Confirm',{user, type}).
--record('Private',{id, author, body, status}).
+-record('Friend',{id, user, status}).
+-record('Confirm',{?ITERATOR(feed), user, type}).
+-record('Private',{?ITERATOR(feed), author, body, status}).
 -record('Typing',{author}).
 
 -record('Room',{room, description, acl, settings}).
 -record('Join',{user, room, answer}).
--record('Public',{id, room, message, author}).
+-record('Public',{?ITERATOR(feed), room, message, author}).
 
 -record('Retrieve',{id, chat}).
 -record('Mark',{id, room, status}).
