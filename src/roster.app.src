@@ -1,6 +1,6 @@
 {application, roster,
  [
-  {description, "ROSTER Simple Messaging Protocol"},
+  {description, "ROSTER Messaging Protocol"},
   {vsn, "1"},
   {registered, []},
   {applications, [kernel, stdlib, kvs]},
