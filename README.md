@@ -1,7 +1,9 @@
-Usage of Synrc Messaging Protocol
-=================================
+Roster N2O Protocol
+===================
 
-This protocol contains following messages:
+Roster protocol is a part of N2O IoT and WebSocket
+protocol stack for messaging applications and server implementations.
+Roster protocol has several sub-protocols, containing following messages:
 
 ```erlang
 % roster
@@ -23,6 +25,8 @@ This protocol contains following messages:
 -record('Mark',{id, room, status}).
 -record('Search',{id, body, author}).
 ```
+
+You may refer to full N2O protocol here: http://5ht.github.io/n2o.htm
 
 ```erlang
 
