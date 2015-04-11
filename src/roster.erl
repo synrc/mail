@@ -1,6 +1,7 @@
 -module(roster).
 -copyright('Synrc Research Center s.r.o.').
 -author('Maxim Sokhatsky').
+-include_lib("kvs/include/metainfo.hrl").
 -include_lib("kvs/include/user.hrl").
 -include("SMP.hrl").
 -compile(export_all).
@@ -22,6 +23,9 @@ add(User,#'Person'{}=Person) ->
 remove(UserId, PersonId) ->
     kvs:remove(#'Person'{feed_id={UserId,roster},
                          id=PersonId}).
+
+list(UserId) ->
+    kvs:entries(kvs:get(feed,{UserId,roster}),'Person',-1).
 
 join(UserId,RoomId) ->
     kvs:add(#'Public'{feed_id={RoomId,chat},
@@ -48,7 +52,14 @@ token(User,DeviceId) ->
 % retrival of last Count messages in chat history
 
 retrieve(RoomId,Count) ->
-    kvs:entries(kvs:get(feed,{RoomId,chat}),'Public').
+    kvs:entries(kvs:get(feed,{RoomId,chat}),'Public',Count).
 
 retrieve(UserId,UserWith,Count) ->
-    kvs:entries(kvs:get(feed,{UserId,chat,UserWith}),'Private').
+    kvs:entries(kvs:get(feed,{UserId,chat,UserWith}),'Private',Count).
+
+% roster KVS metainfo
+
+metainfo() -> #schema { name=roster,    tables=[
+              #table  { name='Person',  fields=record_info(fields, 'Person')},
+              #table  { name='Public',  fields=record_info(fields, 'Public')},
+              #table  { name='Private', fields=record_info(fields, 'Private')}]}.

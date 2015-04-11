@@ -26,6 +26,42 @@ Roster protocol has several sub-protocols, containing following messages:
 -record('Search',{id, body, author}).
 ```
 
+Usage
+-----
+
+```erlang
+> rr(roster).
+> {ok,U} = roster:create("5HT","Maxim","Sokhatsky").
+> roster:add(U,#'Person'{name=oleg,surname=zinchenko}).
+> roster:add(U,#'Person'{name=rilian}).
+> roster:list(1).
+
+[#'Person'{id = 2,version = undefined,container = feed,
+           feed_id = {1,roster},
+           prev = 1,next = undefined,feeds = [],guard = false,
+           etc = undefined,name = rilian,surname = undefined,
+           username = undefined,status = undefined},
+ #'Person'{id = 1,version = undefined,container = feed,
+           feed_id = {1,roster},
+           prev = undefined,next = 2,feeds = [],guard = false,
+           etc = undefined,name = oleg,surname = zinchenko,
+           username = undefined,status = undefined}]
+
+> roster:private(1,2,#'Private'{body="Hi! :-)",author=1}).
+> roster:private(1,2,#'Private'{body="Ok. Hi!",author=2}).
+> roster:retrieve(1,2,undefined).
+
+[#'Private'{id = 2,version = undefined,container = feed,
+            feed_id = {1,chat,2},
+            prev = 1,next = undefined,feeds = [],guard = false,etc = undefined,
+            author = undefined,body = "Ok. Hi!",status = undefined},
+ #'Private'{id = 1,version = undefined,container = feed,
+            feed_id = {1,chat,2},
+            prev = undefined,next = 2,feeds = [],guard = false,
+            etc = undefined,author = undefined,body = "Hi! :-)",
+            status = undefined}]
+```
+
 You may refer to full N2O protocol here: http://5ht.github.io/n2o.htm
 
 ```erlang
