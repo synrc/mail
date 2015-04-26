@@ -69,6 +69,7 @@ SMP DEFINITIONS IMPLICIT TAGS ::= BEGIN
     }
 
     Typing ::= SEQUENCE {
+        room INTEGER,
         author Person
     }
 
