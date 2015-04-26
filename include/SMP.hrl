@@ -14,7 +14,7 @@
 -record('Friend',{id, user, status}).
 -record('Confirm',{?ITERATOR(feed), user, type}).
 -record('Private',{?ITERATOR(feed), author, body, status}).
--record('Typing',{author}).
+-record('Typing',{room, author}).
 
 -record('Room',{room, description, acl, settings}).
 -record('Join',{user, room, answer}).
