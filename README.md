@@ -54,11 +54,11 @@ Usage
 [#'Private'{id = 2,version = undefined,container = feed,
             feed_id = {1,chat,2},
             prev = 1,next = undefined,feeds = [],guard = false,etc = undefined,
-            author = undefined,body = "Ok. Hi!",status = undefined},
+            author = 2,body = "Ok. Hi!",status = undefined},
  #'Private'{id = 1,version = undefined,container = feed,
             feed_id = {1,chat,2},
             prev = undefined,next = 2,feeds = [],guard = false,
-            etc = undefined,author = undefined,body = "Hi! :-)",
+            etc = undefined,author = 1,body = "Hi! :-)",
             status = undefined}]
 ```
 

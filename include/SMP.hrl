@@ -8,6 +8,8 @@
 
 -include_lib("kvs/include/kvs.hrl").
 
+-define(GEN_SERVER, [start_link/1,init/1,handle_call/3,handle_cast/2,handle_info/2,terminate/2,code_change/3]).
+
 -record('Auth',{username, token, services}).
 -record('Person',{?ITERATOR(feed), name, surname, username, status}).
 -record('Presence',{size, userlist}).
