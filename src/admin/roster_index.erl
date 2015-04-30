@@ -17,5 +17,5 @@ body()    -> lists:flatten(
                             body=lists:concat([G#group.id])},
                       #br{} ] || G <- list(group)] ]).
 
-list(Space) -> kvs:entries(kvs:get(feed,user),user,10).
+list(Space) -> kvs:entries(kvs:get(feed,Space),Space,10).
 event(Event) -> wf:info(?MODULE,"Unknown Event: ~p~n",[Event]).
