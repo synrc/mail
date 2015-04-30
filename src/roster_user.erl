@@ -12,7 +12,7 @@ handle_call({get},_,Proc)              -> { reply,Proc,Proc };
 handle_call(Command,_,Proc)            -> { reply,{unknown,Command},Proc }.
 
 init(User) ->
-    wf:info(?MODULE,"User ~p spawned ~p",[User#user.id,self()]),
+    kvs:info(?MODULE,"User ~p spawned ~p",[User#user.id,self()]),
     U = case kvs:get(user,User#user.id) of
          {ok,Exists} -> Exists;
            {error,_} -> User end,
@@ -20,20 +20,20 @@ init(User) ->
     {ok, U#user{}}.
 
 handle_cast(Msg, State) ->
-    wf:info(?MODULE,"Unknown API async: ~p", [Msg]),
+    kvs:info(?MODULE,"Unknown API async: ~p", [Msg]),
     {stop, {error, {unknown_cast, Msg}}, State}.
 
 handle_info({'DOWN', _MonitorRef, _Type, _Object, _Info} = Msg, State = #user{id=Id}) ->
-    wf:info(?MODULE, "connection closed, shutting down session:~p", [Msg]),
+    kvs:info(?MODULE, "connection closed, shutting down session:~p", [Msg]),
     wf:cache({user,Id},undefined),
     {stop, normal, State};
 
 handle_info(Info, State=#user{}) ->
-    wf:info(?MODULE,"Unrecognized info: ~p", [Info]),
+    kvs:info(?MODULE,"Unrecognized info: ~p", [Info]),
     {noreply, State}.
 
 terminate(_Reason, #user{id=Id}) ->
-    wf:info(?MODULE,"Terminating session Id cache: ~p", [Id]),
+    kvs:info(?MODULE,"Terminating session Id cache: ~p", [Id]),
     wf:cache({user,Id},undefined),
     ok.
 
