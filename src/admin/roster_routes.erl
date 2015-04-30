@@ -16,6 +16,7 @@ route_prefix(P) -> route(P).
 
 route(<<>>=A)              -> {A,roster_login};
 route(<<"index">>=A)       -> {A,roster_index};
+route(<<"api">>=A)         -> {A,roster_api};
 route(<<"chat">>=A)        -> {A,roster_chat};
 route(<<"login">>=A)       -> {A,roster_login};
 route(<<"favicon.ico">>=A) -> {A,static_file};

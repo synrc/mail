@@ -17,11 +17,5 @@ body()    -> lists:flatten(
                             body=lists:concat([G#group.id])},
                       #br{} ] || G <- list(group)] ]).
 
-list(Space) -> case kvs:get(feed,Space) of
-                      {ok,Feed} ->
-                            kvs:fold(fun(A,Acc) -> [A|Acc] end,[],Space,
-                            Feed#feed.top,10,
-                            #iterator.prev,#kvs{mod=store_mnesia});
-                  __ -> [] end.
-
+list(Space) -> kvs:entries(kvs:get(feed,user),user,10).
 event(Event) -> wf:info(?MODULE,"Unknown Event: ~p~n",[Event]).

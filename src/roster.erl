@@ -2,6 +2,7 @@
 -copyright('Synrc Research Center s.r.o.').
 -author('Maxim Sokhatsky').
 -include_lib("kvs/include/metainfo.hrl").
+-include_lib("kvs/include/kvs.hrl").
 -include_lib("kvs/include/user.hrl").
 -include_lib("kvs/include/group.hrl").
 -include("SMP.hrl").
@@ -19,33 +20,29 @@ create_group(Name) ->
 
 % chain users to other users (add/remove to/from roster)
 
-add(User,#'Person'{}=Person) ->
-    kvs:add(Person#'Person'{id=kvs:next_id('Person',1),
-                            feed_id={User#user.id,roster}}).
+add(#user{}=User,#'RosterItem'{}=Person) ->
+    kvs:add(Person#'RosterItem'{id=kvs:next_id('RosterItem',1),feed_id={roster,User#user.id}}).
 
-remove(UserId, PersonId) ->
-    kvs:remove(#'Person'{feed_id={UserId,roster},
-                         id=PersonId}).
+remove(UserId, RosterItemId) ->
+    kvs:remove(#'RosterItem'{feed_id={roster,UserId},id=RosterItemId}).
 
 list(UserId) ->
-    kvs:entries(kvs:get(feed,{UserId,roster}),'Person',-1).
+    kvs:entries(kvs:get(feed,{roster,UserId}),'RosterItem',-1).
 
 join(UserId,RoomId) ->
-    kvs:add(#'Public'{feed_id={RoomId,chat},
-                      id=kvs:next_id('Public',1),
-                      message=io_lib:format("User ~p joined.",[UserId]),
-                      author=system,
-                      room=RoomId}).
+    kvs:add(#'MessageItem'{feed_id={history,RoomId},
+                      id=kvs:next_id('MessageItem',1),
+                      payload=io_lib:format("User ~p joined.",[UserId]),
+                      origin=system,
+                      recipient={room,RoomId}}).
 
 % chain messages to the chat lists
 
 private(FromId,ToId,Private) ->
-    kvs:add(Private#'Private'{id=kvs:next_id('Private',1),
-                              feed_id={FromId,chat,ToId}}).
+    kvs:add(Private#'MessageItem'{id=kvs:next_id('MessageItem',1),feed_id={chat,ToId}}).
 
 public(FromId,ToId,Public) ->
-    kvs:add(Public#'Public'{id=kvs:next_id('Public',1),
-                            feed_id={ToId,chat}}).
+    kvs:add(Public#'MessageItem'{id=kvs:next_id('MessageItem',1),feed_id={room,ToId}}).
 
 % retrival of user device that should be stored in tokens during auth
 
@@ -54,18 +51,14 @@ token(User,DeviceId) ->
 
 % retrival of last Count messages in chat history
 
-retrieve(RoomId,Count) ->
-    kvs:entries(kvs:get(feed,{RoomId,chat}),'Public',Count).
-
-retrieve(UserId,UserWith,Count) ->
-    kvs:entries(kvs:get(feed,{UserId,chat,UserWith}),'Private',Count).
+retrieve(Feed,Count) ->
+    kvs:entries(kvs:get(feed,Feed),'MessageItem',Count).
 
 % roster KVS metainfo
 
 metainfo() -> #schema { name=roster,    tables=[
-              #table  { name='Person',  fields=record_info(fields, 'Person')},
-              #table  { name='Public',  fields=record_info(fields, 'Public')},
-              #table  { name='Private', fields=record_info(fields, 'Private')}]}.
+              #table  { name='RosterItem',  fields=record_info(fields, 'RosterItem')},
+              #table  { name='MessageItem', fields=record_info(fields, 'MessageItem')}]}.
 
 start_link(Parameters) -> gen_server:start_link(?MODULE, Parameters, []).
 init([]) -> RestartStrategy = one_for_one,
@@ -74,4 +67,12 @@ init([]) -> RestartStrategy = one_for_one,
             SupFlags = {RestartStrategy, MaxRestarts, MaxSecondsBetweenRestarts},
             {ok, {SupFlags, []}}.
 
-log_modules() -> [roster,roster_app,roster_user,roster_group].
+log_modules() -> [ roster,
+                   roster_app,
+                   roster_user,
+                   roster_group,
+                   roster_api,
+                   roster_auth,
+                   roster_index,
+                   roster_chat   ].
+
