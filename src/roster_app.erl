@@ -31,9 +31,24 @@ start(_,_) ->
 init([]) ->
     application:set_env(kvs,dba,store_mnesia),
     kvs:join(),
+
+     cowboy:start_http(http, 3, [{port, wf:config(n2o,port)}],
+                                [{env, [{dispatch, dispatch_rules()}]}]),
+
     {ok, {{one_for_one, 5, 10}, [ pool(chat_sup),
-                                  pool(muc_sup) 
+                                  pool(muc_sup)
                                 ] }}.
 
 worker(user,User)   -> supervisor:start_child(chat_sup,chat(User));
 worker(group,Group) ->  supervisor:start_child(muc_sup,room(Group)).
+
+mime() -> [{mimetypes,cow_mimetypes,all}].
+
+dispatch_rules() ->
+    cowboy_router:compile(
+        [{'_', [
+            {"/static/[...]", n2o_dynalo, {dir, "priv/static", mime()}},
+            {"/n2o/[...]", n2o_dynalo, {dir, "deps/n2o/priv", mime()}},
+            {"/ws/[...]", bullet_handler, [{handler, n2o_bullet}]},
+            {'_', n2o_cowboy, []}
+    ]}]).
