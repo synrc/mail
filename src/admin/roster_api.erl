@@ -1,9 +1,8 @@
 -module(roster_api).
 -author('Maxim Sokhatsky').
 -compile(export_all).
--include_lib("kvs/include/entry.hrl").
--include_lib("n2o/include/wf.hrl").
--include("roster_api.hrl").
+-include_lib("nitro/include/nitro.hrl").
+-include("websocket_api.hrl").
 
 main() ->
     #dtl{app=roster}.
@@ -18,8 +17,7 @@ event({bin,#'GetRoomList'{}}) ->
     Result;
 
 event({bin,#'GetUserInfo'{}}) ->
-    Result = kvs:get(user,wf:user()),
-    Result;
+    wf:user();
 
 event(Event) ->
     wf:info(?MODULE,"Unknown Event: ~p~n",[Event]).

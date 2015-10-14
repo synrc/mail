@@ -3,9 +3,9 @@
 -include_lib("kvs/include/feed.hrl").
 -include_lib("kvs/include/user.hrl").
 -include_lib("kvs/include/group.hrl").
--include_lib("n2o/include/wf.hrl").
+-include_lib("nitro/include/nitro.hrl").
 
-main() -> #dtl{file="index",app=roster,bindings=[{body,body()}]}.
+main() -> #dtl{app=roster,bindings=[{body,body()}]}.
 
 body() ->
  [ #span   { id=display },                #br{},
@@ -18,9 +18,8 @@ event(login) ->
     User = case wf:q(user) of <<>> -> "anonymous";
                               undefined -> "anonymous";
                               E -> wf:to_list(E) end,
-    wf:user(User),
+    wf:user(#user{id=User}),
     wf:info(?MODULE,"User: ~p",[wf:user()]),
-    wf:redirect("/index"),
-    ok;
+    wf:redirect("/index");
 
-event(_) -> [].
+event(E) -> roster_api:event(E).

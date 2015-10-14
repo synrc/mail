@@ -1,5 +1,5 @@
--ifndef(_ROSTER_API_HRL_).
--define(_ROSTER_API_HRL_, true).
+-ifndef(_WEBSOCKET_API_HRL_).
+-define(_WEBSOCKET_API_HRL_, true).
 
 -record('User',{id, firstName, lastName, login, status, photo}).
 -record('Message',{room, sender, text, media, createdAt, starred}).
