@@ -13,7 +13,7 @@ Roster protocol has several sub-protocols, containing following messages:
 -record('Friend',{user, status}).
 -record('Confirm',{user, type}).
 -record('Private',{id, author, body, status}).
--record('Typing',{author}).
+-record('Typing',{room, author}).
 
 % muc
 -record('Room',{room, description, acl, settings}).
