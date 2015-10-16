@@ -31,10 +31,10 @@ Usage
 
 ```erlang
 > rr(roster).
-> {ok, {Pid, Uid}} = roster:create_user("5HT","Maxim","Sokhatsky").
-> roster:add(Uid,#'RosterItem'{name=oleg,surname=zinchenko}).
-> roster:add(Uid,#'RosterItem'{name=rilian}).
-> roster:list(1).
+> {ok, {Pid, Uid}} = roster:create_user("5HT","Maxim","Sokhatsky"). % create_user(User,Name,Surname)
+> {ok,C1} = roster:add(Uid,#'RosterItem'{name=oleg,surname=zinchenko}).
+> {ok,C2} = roster:add(Uid,#'RosterItem'{name=rilian}).
+> roster:list(Uid).
 
 [#'Person'{id = 2,version = undefined,container = feed,
            feed_id = {1,roster},
@@ -47,9 +47,10 @@ Usage
            etc = undefined,name = oleg,surname = zinchenko,
            username = undefined,status = undefined}]
 
-> roster:private(1,2,#'Private'{body="Hi! :-)",author=1}).
-> roster:private(1,2,#'Private'{body="Ok. Hi!",author=2}).
-> roster:retrieve(1,2,undefined).
+> roster:private(Uid,C1,#'MessageItem'{payload="Hi! :-)"}).
+> roster:private(Uid,C1,#'MessageItem'{payload="How's it going?"}).
+> roster:private(Uid,C2,#'MessageItem'{payload="Ok. Hi!"}).
+> roster:retrieve({chat,C1},9).
 
 [#'Private'{id = 2,version = undefined,container = feed,
             feed_id = {1,chat,2},
