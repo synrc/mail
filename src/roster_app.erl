@@ -39,8 +39,8 @@ init([]) ->
                                   pool(muc_sup)
                                 ] }}.
 
-worker(user,User)   -> supervisor:start_child(chat_sup,chat(User));
-worker(group,Group) ->  supervisor:start_child(muc_sup,room(Group)).
+worker(user,User)   -> {ok, Pid} = supervisor:start_child(chat_sup,chat(User)), {ok, {Pid,User#user.id}};
+worker(group,Group) -> {ok, Pid} = supervisor:start_child(muc_sup,room(Group)), {ok, {Pid,Group#group.id}}.
 
 mime() -> [{mimetypes,cow_mimetypes,all}].
 

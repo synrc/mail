@@ -7,23 +7,26 @@ Roster protocol has several sub-protocols, containing following messages:
 
 ```erlang
 % roster
--record('Auth',{username, token, services}).
--record('Person',{id, name, surname, username, status}).
--record('Presence',{size, userlist}).
--record('Friend',{user, status}).
--record('Confirm',{user, type}).
--record('Private',{id, author, body, status}).
--record('Typing',{room, author}).
+-record('RosterItem',  {?ITERATOR(feed), name, surname, username, status}).
+-record('MessageItem', {?ITERATOR(feed), recipient, payload, origin, status}).
+
+-record('Auth',     {username, token, services}).
+-record('Person',   {id, name, surname, username, status}).
+-record('Presence', {size, userlist}).
+-record('Friend',   {id, user, status}).
+-record('Confirm',  {user, type}).
+-record('Private',  {id, recipient, body, author, status}).
+-record('Typing',   {room, author}).
 
 % muc
--record('Room',{room, description, acl, settings}).
--record('Join',{user, room, answer}).
--record('Public',{id, room, message, author}).
+-record('Room',     {room, description, acl, settings}).
+-record('Join',     {user, room, answer}).
+-record('Public',   {id, room, message, author, status}).
 
 % search
--record('Retrieve',{id, chat}).
--record('Mark',{id, room, status}).
--record('Search',{id, body, author}).
+-record('Retrieve', {id, chat}).
+-record('Mark',     {id, room, status}).
+-record('Search',   {id, body, author}).
 ```
 
 Usage
@@ -31,10 +34,10 @@ Usage
 
 ```erlang
 > rr(roster).
-> {ok,U} = roster:create("5HT","Maxim","Sokhatsky").
-> roster:add(U,#'Person'{name=oleg,surname=zinchenko}).
-> roster:add(U,#'Person'{name=rilian}).
-> roster:list(1).
+> {ok, {Pid, Uid}} = roster:create_user("5HT","Maxim","Sokhatsky"). % create_user(User,Name,Surname)
+> {ok,C1} = roster:add(Uid,#'RosterItem'{name=oleg,surname=zinchenko}).
+> {ok,C2} = roster:add(Uid,#'RosterItem'{name=rilian}).
+> roster:list(Uid).
 
 [#'Person'{id = 2,version = undefined,container = feed,
            feed_id = {1,roster},
@@ -47,9 +50,10 @@ Usage
            etc = undefined,name = oleg,surname = zinchenko,
            username = undefined,status = undefined}]
 
-> roster:private(1,2,#'Private'{body="Hi! :-)",author=1}).
-> roster:private(1,2,#'Private'{body="Ok. Hi!",author=2}).
-> roster:retrieve(1,2,undefined).
+> roster:private(Uid,C1,#'MessageItem'{payload="Hi! :-)"}).
+> roster:private(Uid,C1,#'MessageItem'{payload="How's it going?"}).
+> roster:private(Uid,C2,#'MessageItem'{payload="Ok. Hi!"}).
+> roster:retrieve({chat,C1},9).
 
 [#'Private'{id = 2,version = undefined,container = feed,
             feed_id = {1,chat,2},

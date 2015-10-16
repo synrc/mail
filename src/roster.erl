@@ -20,8 +20,8 @@ create_group(Name) ->
 
 % chain users to other users (add/remove to/from roster)
 
-add(#user{}=User,#'RosterItem'{}=Person) ->
-    kvs:add(Person#'RosterItem'{id=kvs:next_id('RosterItem',1),feed_id={roster,User#user.id}}).
+add(UserId,#'RosterItem'{}=Person) ->
+    kvs:add(Person#'RosterItem'{id=kvs:next_id('RosterItem',1),feed_id={roster,UserId}}).
 
 remove(UserId, RosterItemId) ->
     kvs:remove(#'RosterItem'{feed_id={roster,UserId},id=RosterItemId}).
