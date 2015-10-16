@@ -17,7 +17,7 @@ init(User) ->
          {ok,Exists} -> Exists;
            {error,_} -> User end,
     wf:cache({user,U#user.id},self()),
-    {ok, U#user{}}.
+    {ok, {U#user{},User#user.id}}.
 
 handle_cast(Msg, State) ->
     kvs:info(?MODULE,"Unknown API async: ~p", [Msg]),

@@ -31,9 +31,9 @@ Usage
 
 ```erlang
 > rr(roster).
-> {ok,U} = roster:create("5HT","Maxim","Sokhatsky").
-> roster:add(U,#'Person'{name=oleg,surname=zinchenko}).
-> roster:add(U,#'Person'{name=rilian}).
+> {ok, {Pid, Uid}} = roster:create_user("5HT","Maxim","Sokhatsky").
+> roster:add(Uid,#'RosterItem'{name=oleg,surname=zinchenko}).
+> roster:add(Uid,#'RosterItem'{name=rilian}).
 > roster:list(1).
 
 [#'Person'{id = 2,version = undefined,container = feed,
