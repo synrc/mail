@@ -1,10 +1,9 @@
 -module(roster_group).
 -author('Maxim Sokhatsky').
--include("SMP.hrl").
+-include_lib("roster/include/gen_server.hrl").
 -include_lib("kvs/include/group.hrl").
 -behaviour(gen_server).
 -export(?GEN_SERVER).
--compile(export_all).
 
 start_link(Parameters) -> gen_server:start_link(?MODULE, Parameters, []).
 

@@ -16,7 +16,7 @@ defmodule ROSTER.Mixfile do
   defp package do
     [files: ["include", "priv", "src", "LICENSE", "README.md", "rebar.config", "sys.config", "vm.args"],
      licenses: ["MIT"],
-     maintainers: ["Oleg Zinchenko", "Namdak Tonpa"],
+     maintainers: ["Namdak Tonpa"],
      name: :roster,
      links: %{"GitHub" => "https://github.com/synrc/roster"}]
   end

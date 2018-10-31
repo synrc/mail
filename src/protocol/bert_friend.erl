@@ -1,0 +1,3 @@
+-module(bert_friend).
+-include_lib("roster/include/feature.hrl").
+-compile({parse_transform, bert_google}).
