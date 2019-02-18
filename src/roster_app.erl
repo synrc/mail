@@ -1,8 +1,8 @@
 -module(roster_app).
 -behaviour(application).
--include_lib("kvs/include/user.hrl").
--include_lib("kvs/include/group.hrl").
--include_lib("kvs/include/feed.hrl").
+-include("user.hrl").
+-include("group.hrl").
+-include("feed.hrl").
 -export([start/2, stop/1, init/1, start/0]).
 
 chat(#user{id=Id}=User)   -> {Id,{roster_user,start_link,[User]},
