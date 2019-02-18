@@ -1,7 +1,7 @@
 -module(roster).
 -copyright('Synrc Research Center s.r.o.').
 -author('Maxim Sokhatsky').
--include_lib("kvs/include/metainfo.hrl").
+-include_lib("kvx/include/metainfo.hrl").
 -compile(export_all).
 
 metainfo() -> #schema { name=roster,    tables=[]}.

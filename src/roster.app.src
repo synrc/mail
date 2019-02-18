@@ -3,7 +3,7 @@
   {description, "ROSTER Messaging Protocol"},
   {vsn, "2.10"},
   {registered, []},
-  {applications, [kernel, stdlib, kvs]},
+  {applications, [kernel, stdlib, kvx]},
   {mod, { roster_app, []}},
   {env, []}
  ]}.
