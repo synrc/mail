@@ -2,9 +2,6 @@
 -copyright('Synrc Research Center s.r.o.').
 -author('Maxim Sokhatsky').
 -include_lib("kvs/include/metainfo.hrl").
--include_lib("kvs/include/kvs.hrl").
--include_lib("kvs/include/user.hrl").
--include_lib("kvs/include/group.hrl").
 -compile(export_all).
 
 metainfo() -> #schema { name=roster,    tables=[]}.

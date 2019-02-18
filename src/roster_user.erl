@@ -1,7 +1,7 @@
 -module(roster_user).
 -author('Maxim Sokhatsky').
 -include_lib("roster/include/gen_server.hrl").
--include_lib("kvs/include/user.hrl").
+-include_lib("user.hrl").
 -behaviour(gen_server).
 -export(?GEN_SERVER).
 
