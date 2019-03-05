@@ -7,21 +7,18 @@ Roster protocol has several sub-protocols, containing following messages:
 
 ```erlang
 -record('Message',      {id        = [] :: [] | integer(),
+                         next      = [] :: [] | integer(),
+                         prev      = [] :: [] | integer(),
                          container = chain :: container(),
                          feed_id   = [] :: #muc{} | #p2p{},
-                         prev      = [] :: [] | integer(),
-                         next      = [] :: [] | integer(),
                          msg_id    = [] :: [] | binary(),
                          from      = [] :: [] | binary(),
                          to        = [] :: [] | binary(),
                          created   = [] :: [] | integer(),
-                         files     = [] :: list(#'Desc'{}),
+                         files     = [] :: list(#'File'{}),
                          type      = [] :: messageType(),
                          link      = [] :: [] | integer() | #'Message'{},
-                         seenby    = [] :: list(binary() | integer()),
-                         repliedby = [] :: list(integer()),
-                         mentioned = [] :: list(integer()),
-                         mstatus   = [] :: messageStatus()}).
+                         msg_status= [] :: messageStatus()}).
 
 -record('History',      {roster_id = [] :: [] | binary(),
                          feed      = [] :: [] | #p2p{} | #muc{},

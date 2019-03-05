@@ -11,7 +11,7 @@
                          to   = [] :: [] | binary() }).
 
 -record('Contact',      {user_id = [] :: [] | binary(),
-                         avatar   = [] :: list(integer()), % #'Desc'{} from message
+                         avatar   = [] :: list(integer()), % #'File'{} from message
                          names    = [] :: [] | binary(),
                          surnames = [] :: [] | binary(),
                          nick     = [] :: [] | binary(),

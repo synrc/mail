@@ -18,7 +18,7 @@
                         expiration = [] :: integer(),
                         service_status     = [] :: serverStatus()}).
 
--record('Desc',         {id       = [] :: binary(),
+-record('File',         {id       = [] :: binary(),
                          mime     = <<"text">> :: binary(),
                          payload  = [] :: binary(),
                          parentid = [] :: binary(),

@@ -43,7 +43,7 @@
                          settings    = [] :: list(#'Feature'{}),
                          members     = [] :: list(#'Member'{}),
                          admins      = [] :: list(#'Member'{}),
-                         data        = [] :: list(#'Desc'{}),
+                         data        = [] :: list(#'File'{}),
                          type        = [] :: roomType(),
                          tos         = [] :: [] | binary(),
                          tos_update  = 0  :: [] | integer(),

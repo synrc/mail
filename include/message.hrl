@@ -20,13 +20,10 @@
                          from      = [] :: [] | binary(),
                          to        = [] :: [] | binary(),
                          created   = [] :: [] | integer(),
-                         files     = [] :: list(#'Desc'{}),
+                         files     = [] :: list(#'File'{}),
                          type      = [] :: messageType(),
                          link      = [] :: [] | integer() | #'Message'{},
-                         seenby    = [] :: list(binary() | integer()),
-                         repliedby = [] :: list(integer()),
-                         mentioned = [] :: list(integer()),
-                         mstatus   = [] :: messageStatus()}).
+                         mgs_status= [] :: messageStatus()}).
 
 -record('History',      {roster_id = [] :: [] | binary(),
                          feed      = [] :: [] | #p2p{} | #muc{},
