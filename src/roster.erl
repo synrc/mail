@@ -1,6 +1,7 @@
 -module(roster).
 -behaviour(application).
 -behaviour(supervisor).
+-include("message.hrl").
 -include_lib("n2o/include/n2o.hrl").
 -include_lib("kvx/include/metainfo.hrl").
 -compile(export_all).
@@ -21,4 +22,6 @@ start(_,_) -> X = supervisor:start_link({local,roster},roster,[]),
 points()   -> cowboy_router:compile([{'_', [{"/[...]",n2o_cowboy2,[] } ]}]).
 port()     -> application:get_env(n2o,port,8042).
 init([])   -> {ok, {{one_for_one, 5, 10}, [ ] }}.
-metainfo() -> #schema { name=roster, tables=[]}.
+metainfo() -> #schema { name=roster, tables=[
+              #table { name = 'Message', fields = record_info(fields,'Message')}
+              ]}.

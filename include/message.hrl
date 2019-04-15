@@ -14,6 +14,8 @@
                          table = [] :: [] | atom() }).
 
 -record('Message',      {id        = [] :: [] | integer(),
+                         next = [],
+                         prev = [],
                          client_id = [] :: [] | binary(),
                          from      = [] :: [] | binary(),
                          to        = [] :: [] | binary(),

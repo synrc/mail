@@ -9,7 +9,8 @@ send(C,M) -> C ! M.
 proc(init,#pi{name=Name}=Async) -> n2o:reg(Name), {ok,Async#pi{state=[]}};
 
 proc({publish, C, Token, Request}, State = #pi{name=Server}) ->
-    Ctx = #cx { session= n2o:to_binary(Token), node=Server, client_pid=C, from=C },
+    Ctx = #cx { session= n2o:to_binary(Token), node=Server,
+                client_pid=C, state=application:get_env(kvx,dba,[]) },
     put(context, Ctx),
     Return = try case n2o_proto:info(Request,[],Ctx) of
              {reply,{_,      <<>>},_,_} -> skip;
