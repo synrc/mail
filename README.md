@@ -1,9 +1,10 @@
 CHAT: Messaging Protocol
 ========================
+[![Build Status](https://travis-ci.org/synrc/chat.svg?branch=master)](https://travis-ci.org/synrc/chat)
 
-Roster protocol is a part of N2O IoT and WebSocket
-protocol stack for messaging applications and server implementations.
-Roster protocol has several sub-protocols, containing following messages:
+CHAT is an QoS=1 example of messaging system built on top SYN/GRPOC
+for publish subscribe, N2O for protocol description, and KVX as for data storage.
+It also contains simple TEXT WebSocket protocol for debuggins purposes.
 
 ```shell
 $ wscat --no-check -c https://localhost:8042
@@ -48,5 +49,6 @@ Credits
 -------
 
 * Maxim Sokhatsky
+* Vladimir Kirillov
 
 OM A HUM
