@@ -1,15 +1,23 @@
 -module(roster).
--copyright('Synrc Research Center s.r.o.').
--author('Maxim Sokhatsky').
+-behaviour(application).
+-behaviour(supervisor).
+-include_lib("n2o/include/n2o.hrl").
 -include_lib("kvx/include/metainfo.hrl").
 -compile(export_all).
 
-metainfo() -> #schema { name=roster,    tables=[]}.
-log_modules() -> [  ].
-
-start_link(Parameters) -> gen_server:start_link(?MODULE, Parameters, []).
-init([]) -> RestartStrategy = one_for_one,
-            MaxRestarts = 1,
-            MaxSecondsBetweenRestarts = 600,
-            SupFlags = {RestartStrategy, MaxRestarts, MaxSecondsBetweenRestarts},
-            {ok, {SupFlags, []}}.
+stop(_)    -> ok.
+start()    -> start(normal,[]).
+start(_,_) -> X = supervisor:start_link({local,roster},roster,[]),
+              syn:init(),
+              cowboy:start_tls(http, [{port, port()},
+                     {certfile, code:priv_dir(roster)++"/ssl/fullchain.pem"},
+                     {keyfile, code:priv_dir(roster)++"/ssl/privkey.pem"},
+                     {cacertfile, code:priv_dir(roster)++"/ssl/fullchain.pem"}],
+                      #{ env => #{dispatch => points()} }),
+              [ n2o_pi:start(#pi{module=n2o_node,table=ring,sup=roster,state=[],name={server,Pos}})
+                || {{_,_},Pos} <- lists:zip(n2o:ring(),lists:seq(1,length(n2o:ring()))) ],
+              X.
+points()   -> cowboy_router:compile([{'_', [{"/[...]",n2o_cowboy2,[] } ]}]).
+port()     -> application:get_env(n2o,port,8042).
+init([])   -> {ok, {{one_for_one, 5, 10}, [ ] }}.
+metainfo() -> #schema { name=roster, tables=[]}.

@@ -1,9 +1,9 @@
 {application, roster,
  [
   {description, "ROSTER Messaging Protocol"},
-  {vsn, "2.10"},
+  {vsn, "2.4"},
   {registered, []},
-  {applications, [kernel, stdlib, kvx]},
-  {mod, { roster_app, []}},
+  {applications, [kernel, stdlib, cowboy, n2o, kvx]},
+  {mod, { roster, []}},
   {env, []}
  ]}.
