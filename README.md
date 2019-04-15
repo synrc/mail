@@ -1,5 +1,5 @@
-ROSTER: Messaging Protocol
-==========================
+CHAT: Messaging Protocol
+========================
 
 Roster protocol is a part of N2O IoT and WebSocket
 protocol stack for messaging applications and server implementations.
