@@ -3,12 +3,14 @@ CHAT: Messaging Protocol
 [![Build Status](https://travis-ci.org/synrc/chat.svg?branch=master)](https://travis-ci.org/synrc/chat)
 
 CHAT is an QoS=1 example of messaging system built on top of:
-1) SYN for publish subscribe;
-2) N2O for protocol description;
-3) KVX for data storage;
-4) and COWBOY for Web Server.
-It also contains simple TEXT WebSocket protocol for debuggin purposes.
-You can freely use this example.
+
+* SYN for publish subscribe QoS message queue;
+* N2O for protocols;
+* KVX for data storage;
+* and COWBOY for Web Server.
+
+It also contains simple textual WebSocket protocol for debuggin purposes.
+You can freely use this example with ISC license.
 
 ```shell
 $ wscat --no-check -c https://localhost:8042
@@ -48,6 +50,9 @@ connected (press CTRL+C to quit)
             [{'File',[],<<"text">>,"KITTY",[],[]}],
             [],[],[]}]
 ```
+
+Documentation
+-------------
 
 The site of the project is <a href="https://n2o.im">n2o.im</a>.
 
