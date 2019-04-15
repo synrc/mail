@@ -45,6 +45,8 @@ connected (press CTRL+C to quit)
             [],[],[]}]
 ```
 
+The site of the project is <a href="https://n2o.im">n2o.im</a>.
+
 Credits
 -------
 
