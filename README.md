@@ -5,7 +5,7 @@ Roster protocol is a part of N2O IoT and WebSocket
 protocol stack for messaging applications and server implementations.
 Roster protocol has several sub-protocols, containing following messages:
 
-```erlang
+```shell
 $ wscat --no-check -c https://localhost:8042
 connected (press CTRL+C to quit)
 > N2O,3
@@ -27,7 +27,7 @@ connected (press CTRL+C to quit)
 < ACK "QoS=1"
 ```
 
-```
+```erlang
 > kvx:all({p2p,"3","5"}).
 [{'Message',"QoS=1",[],"3","5",
             [{'File',[],<<"text">>,"BYE",[],[]}],
