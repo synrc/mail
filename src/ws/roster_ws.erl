@@ -4,11 +4,6 @@
 -include_lib("n2o/include/n2o.hrl").
 -compile(export_all).
 
-user(Id) ->
-   case kvx:get(writer,n2o:to_binary(Id)) of
-        {ok,_} -> true;
-        {error,_} -> false end.
-
 info({text,<<"N2O,",A/binary>>},R,S) ->
    n2o:reg({client,A}),
    kvx:writer(A),
@@ -19,16 +14,15 @@ info({text,<<"MSG ",C/binary>>},R,#cx{session = Sid}=S) ->
    Key = case TS of [X] -> X; _ -> kvx:seq([],[]) end,
    Msg = #'Message'{id=Key,from=From,to=To,files=[#'File'{payload=Payload}]},
    Res = case user(From) andalso user(To) of
-         false -> <<"ERR unexistent user.">>;
+         false -> <<"ERR user doesn't exist.">>;
          true  -> {ring,N} = n2o_ring:lookup({p2p,From,To}),
-                  {ok,Ack} = n2o:send({server,N},{publish,self(),Sid,Msg}),
-                  <<"ACK ",(list_to_binary(io_lib:format("~p",[Ack])))/binary>> end,
+                  n2o:send({server,N},{publish,self(),Sid,Msg}),
+                  <<"SENT ",(bin(Key))/binary>> end,
    {reply, {text, Res},R,S};
 
-info({flush,Text},R,S) ->
-   {reply, {text, Text},R,S};
-
-info(Msg, R,S) ->
-   io:format("WS: ~p~n",[Msg]),
-   {unknown,Msg,R,S}.
+info({flush,Text},R,S)    -> {reply, {text, Text},R,S};
+info(#'Ack'{id=Key}, R,S) -> {reply, {text,<<"ACK ",(bin(Key))/binary>>},R,S};
+info(Msg, R,S)            -> {unknown,Msg,R,S}.
+bin(Key)                  -> list_to_binary(io_lib:format("~p",[Key])).
+user(Id)                  -> case kvx:get(writer,n2o:to_binary(Id)) of {ok,_} -> true; {error,_} -> false end.
 
