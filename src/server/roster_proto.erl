@@ -17,7 +17,7 @@ info(#'Message'{from=From,to=To,id=Id}=M, R, #cx{state=kvx_mnesia}=S) ->
    kvx:ensure(#writer{id={p2p,From,To}}),
    case kvx:get('Message',Id) of
         {ok,_}    -> skip;
-        {error,_} -> kvx:save(kvx:add((kvx:load_writer({p2p,From,To}))#writer{args=M})) end,
+        {error,_} -> kvx:save(kvx:add((kvx:writer({p2p,From,To}))#writer{args=M})) end,
    {reply,{binary, #'Ack'{id=Id}},R,S};
 
 info(Msg, R,S) ->
