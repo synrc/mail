@@ -24,6 +24,11 @@ connected (press CTRL+C to quit)
 > MSG 3 5 BYE QoS=1
 < SENT "QoS=1"
 < ACK "QoS=1"
+> HIST 3 5
+< History:
+3:5:HELO
+3:5:KITTY
+3:5:BYE
 ```
 
 ```erlang
