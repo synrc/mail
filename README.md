@@ -4,13 +4,13 @@ CHAT: Messaging Protocol
 
 CHAT is an QoS=1 example of messaging system built on top of:
 
-* SYN for publish subscribe QoS message queue;
+* SYN for publish subscribe message queue;
 * N2O for protocols;
 * KVX for data storage;
-* and COWBOY for Web Server.
+* and COWBOY for web server.
 
-It also contains simple textual WebSocket protocol for debuggin purposes.
-You can freely use this example with ISC license.
+It also contains simple textual WebSocket protocol for debugging purposes.
+You can freely use this example with your favourite formatter for user terminal protocol.
 
 ```shell
 $ wscat --no-check -c https://localhost:8042
@@ -54,7 +54,8 @@ connected (press CTRL+C to quit)
 Documentation
 -------------
 
-The site of the project is <a href="https://n2o.im">n2o.im</a>.
+The project homepage is <a href="https://n2o.im">n2o.im</a>.
+The documentation on stack is in header and by the following address <a href="https://o7.n2o.space">o7.n2o.space</a>.
 
 Credits
 -------
