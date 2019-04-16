@@ -21,7 +21,7 @@ proc({publish, C, Token, Request}, State = #pi{name=Server}) ->
              {reply,{default,Term},_,_} -> {ok,send(C,n2o:encode(Term))};
              {reply,{Encoder,Term},_,_} -> {ok,send(C,Encoder:encode(Term))};
                                   Reply -> {error,{"Invalid Return",Reply}} end
-    catch _:_:S -> io:format("Catch:~p~n",[S]) end,
+    catch E:R -> io:format("Catch:~p~n",[n2o:stack(E,R)]) end,
     {reply, Return, State};
 
 proc(Unknown,#pi{name=Name}=Async) ->
