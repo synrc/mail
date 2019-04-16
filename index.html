@@ -1,0 +1,128 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="Maxim Sokhatsky" />
+    <title>CHAT</title>
+    <link rel="stylesheet" href="https://synrc.space/synrc.css?v=2" />
+</head>
+<body>
+<nav>
+    <a href='https://n2o.space'>SPEC</a>
+    <a href='https://o7.n2o.space'>O7</a>
+    <a href='https://chat.n2o.space' style="background:#ededed;">CHAT</a>
+</nav>
+<header>
+    <a href="https://github.com/synrc/chat"><img src="https://synrc.space/images/Synrc Neo.svg?v=1"></a>
+    <h1>CHAT</h1>
+</header>
+<aside>
+    <article>
+        <section>
+            <h3>SYNOPSIS</h3>
+            <div>CHAT is an QoS=1 one-directional (client to server)
+            example of messaging system built on top of: </div>
+
+            <div>
+                 <ul>
+                 <li>SYN for publish subscribe QoS message queue;</li>
+                 <li>N2O for protocols;</li>
+                 <li>KVX for data storage;</li>
+                 <li>and COWBOY for Web Server.</li>
+                 </ul>
+            </div>
+            <div>Acknoledgments are being delivered with QoS=0 with
+                 transactional sync replication, that delivers diff updates during feed opening.
+                 It also contains simple textual WebSocket protocol for
+                 debuggin purposes. You can freely use this example with ISC license.</div>
+        </section>
+        <section>
+            <h3>MODULES</h3>
+            <div><ul>
+           <li><a href="man/chat.htm">CHAT</a></font></li>
+           <li><a href="man/chat_client.htm">CHAT_CLIENT</a></font></li>
+           <li><a href="man/chat_server.htm">CHAT_SERVER</a></font></li>
+            </ul></div>
+            <br>
+            <div>
+                APR 2019 &copy; <a href="https://github.com/5HT">Namdak Tonpa</a> ISC<br>
+                VER 3.4
+            </div>
+        </section>
+        <section>
+        <figure>
+        <code>
+ $ wscat -c wss://ns.synrc.com:8042
+        </code>
+        </figure>
+        </section>
+    </article>
+</aside>
+<main>
+    <section>
+
+    <h3>SESSION</h3>
+
+    <figure><code>
+$ wscat --no-check -c https://localhost:8042
+connected (press CTRL+C to quit)
+> N2O,3
+< USER 3
+> N2O,5
+< USER 5
+> MSG 3 5 0 HELO
+< SENT 1555353999252659000
+< ACK 1555353999252659000
+> MSG 3 5 0 KITTY
+< SENT 1555354008545233000
+< ACK 1555354008545233000
+> MSG 3 5 QoS=1 BYE 
+< SENT "QoS=1"
+< ACK "QoS=1"
+> MSG 3 5 QoS=1 BYE 
+< SENT "QoS=1"
+< ACK "QoS=1"
+> HIST 3 5
+< History:
+3:5:HELO
+3:5:KITTY
+3:5:BYE
+    </code></figure>
+    </section>
+
+    <section>
+       <h3></h3>
+       <figure><code>
+ > kvx:all({p2p,"3","5"}).
+ [{'Message',"QoS=1",[],"3","5",
+             [{'File',[],<<"text">>,"BYE",[],[]}],
+             [],[],[]},
+  {'Message',1555353999252659000,[],"3","5",
+             [{'File',[],<<"text">>,"HELO",[],[]}],
+             [],[],[]},
+  {'Message',1555354008545233000,[],"3","5",
+             [{'File',[],<<"text">>,"KITTY",[],[]}],
+             [],[],[]}]
+       </code></figure>
+    </section>
+
+    <section>
+        <a name=plugin><h3>CONTRIBUTORS</h3></a>
+        <div>
+        <ul>
+           <li><a href="https://github.com/5HT">5HT</a> &mdash; Namdak Tonpa</li>
+           <li><a href="https://github.com/proger">proger</a> &mdash; Vlad Ki</li>
+           <li><a href="https://github.com/doxtop">doxtop</a> &mdash; Andrii Zadorozhnii</li>
+           <li><a href="https://github.com/cryoflamer">cryoflamer</a> &mdash; Yuri Maslovsky</li>
+           <li><a href="https://github.com/qomputer">qomputer</a> &mdash; Igor Kharin</li>
+        </ul></div>
+        <br><br>
+    </section>
+</main>
+<footer>
+    Made with <span class="heart">❤</span> to N2O
+</footer>
+</body>
+</html>
