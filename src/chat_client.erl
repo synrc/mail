@@ -5,7 +5,7 @@
 -include_lib("n2o/include/n2o.hrl").
 -compile(export_all).
 
-info({text,<<"N2O,",X/binary>>},R,S) ->
+info({text,<<"N2O,",X/binary>>},R,S) -> % auth
    Str = string:trim(binary_to_list(X)),
    n2o:reg({client,Str}),
    A = list_to_binary(Str),
@@ -14,22 +14,23 @@ info({text,<<"N2O,",X/binary>>},R,S) ->
         {ok,_} -> skip end,
    {reply,{text,<<"USER ",A/binary>>},R,S#cx{session = A}};
 
-info({text,<<"MSG ",C/binary>>},R,#cx{session = Sid}=S) ->
+info({text,<<"MSG ",C/binary>>},R,#cx{session = Sid}=S) -> % send message
    case string:tokens(binary_to_list(C)," ") of
         [From,To,Id|Rest] ->
            Key = case Id of "0" -> kvx:seq([],[]); I -> I end,
            Msg = #'Message'{id=Key,from=From,to=To,files=[#'File'{payload=string:join(Rest," ")}]},
            Res = case user(From) andalso user(To) of
                  false -> <<"ERR user doesn't exist.">>;
-                 true  -> {ring,N} = n2o_ring:lookup({p2p,From,To}),
+                 true  -> % here is feed consistency happens
+                          {ring,N} = n2o_ring:lookup({p2p,From,To}),
                           n2o:send({server,N},{publish,self(),Sid,Msg}),
                           <<"SENT ",(bin(Key))/binary>> end,
             {reply, {text, Res},R,S};
        _ -> {reply, {text, <<"ERROR in request.">>},R,S} end;
 
-info({text,<<"HIST",C/binary>>},R,S) ->
+info({text,<<"HIST",C/binary>>},R,S) -> % print the feed
    case string:tokens(binary_to_list(C)," ") of
-        [From,To] ->
+        [From,To] -> % we could perform database retrivals directly in WebSocket channel
            kvx:ensure(#writer{id={p2p,From,To}}),
            Fetch = (kvx:take((kvx:reader({p2p,From,To}))#reader{args=-1}))#reader.args,
            Res = string:join([ format_msg(M) || M <- Fetch ],"\n"),
@@ -37,7 +38,7 @@ info({text,<<"HIST",C/binary>>},R,S) ->
                           (list_to_binary(Res))/binary>>},R,S};
       _ -> {reply,{text,<<"ERROR in request.">>},R,S} end;
 
-info({text,<<"SEEN",C/binary>>},R,S) ->
+info({text,<<"SEEN",C/binary>>},R,S) -> % erase the feed by SEEN command
    Res = case string:tokens(binary_to_list(C)," ") of
         [From,To,Id] -> {reply,{text,<<"ERASED ",(bin(Id))/binary>>},R,S};
                    _ -> {reply,{text,<<"ERROR in request.">>},R,S} end;
