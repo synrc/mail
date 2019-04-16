@@ -1,4 +1,5 @@
--module(roster).
+-module(chat).
+-copyright('2014—2019 (c) Synrc Research Center').
 -behaviour(application).
 -behaviour(supervisor).
 -include("message.hrl").
@@ -8,12 +9,12 @@
 
 stop(_)    -> ok.
 start()    -> start(normal,[]).
-start(_,_) -> X = supervisor:start_link({local,roster},roster,[]),
+start(_,_) -> X = supervisor:start_link({local,?MODULE},?MODULE,[]),
               syn:init(),
               kvx:join(),
-              cowboy:start_tls(http,n2o_cowboy:env(roster),#{env=>#{dispatch=>points()}}),
+              cowboy:start_tls(http,n2o_cowboy:env(?MODULE),#{env=>#{dispatch=>points()}}),
               [ n2o_pi:start(#pi{module=n2o_wsnode,table=ring,
-                                 sup=roster,state=[],name={server,Pos}})
+                                 sup=?MODULE,state=[],name={server,Pos}})
                 || {{_,_},Pos} <- lists:zip(n2o:ring(),lists:seq(1,length(n2o:ring()))) ],
               X.
 points()   -> cowboy_router:compile([{'_', [{"/[...]",n2o_cowboy2,[] } ]}]).

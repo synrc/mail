@@ -1,3 +1,5 @@
--module(bert_friend).
+-module(chat_roster).
 -include("feature.hrl").
+-include("roster.hrl").
 -compile({parse_transform, bert_javascript}).
+

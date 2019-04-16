@@ -1,5 +1,5 @@
--module(bert_message).
+-module(chat_room).
 -include("feature.hrl").
--include("message.hrl").
+-include("room.hrl").
 -compile({parse_transform, bert_javascript}).
 

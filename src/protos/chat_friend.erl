@@ -1,5 +1,3 @@
--module(bert_room).
+-module(chat_friend).
 -include("feature.hrl").
--include("room.hrl").
 -compile({parse_transform, bert_javascript}).
-
