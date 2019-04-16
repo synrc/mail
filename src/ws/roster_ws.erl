@@ -15,8 +15,8 @@ info({text,<<"HIST ",C/binary>>},R,S) ->
    case string:tokens(binary_to_list(C)," ") of
         [From,To] ->
            kvx:ensure(#writer{id={p2p,From,To}}),
-           Res = string:join([ io_lib:format("~s:~s:~s",[From,To,P])
-             || #'Message'{from=From,to=To,files=[#'File'{payload=P}]}
+           Res = string:join([ io_lib:format("~s:~s:~s:~s",[From,To,Id,P])
+             || #'Message'{id=Id,from=From,to=To,files=[#'File'{payload=P}]}
              <- (kvx:take((kvx:reader({p2p,From,To}))#reader{args=-1}))#reader.args ],"\n"),
            {reply,{text,<<"History:\n",(list_to_binary(Res))/binary>>},R,S};
       _ -> {reply,{text,<<"ERROR in request.">>},R,S} end;
