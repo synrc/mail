@@ -22,22 +22,21 @@
     <article>
         <section>
             <h3>SYNOPSIS</h3>
-            <div>CHAT is an QoS=1 one-directional (client to server)
-            example of messaging system built on top of: </div>
-
+            
+            <div>CHAT is a QoS=1 one-directional (client to server) example of a messaging system built on top of:</div>
             <div>
                  <ul>
-                 <li>SYN for publish subscribe message queue;</li>
+                 <li>SYN for publish-subscribe message queue;
                  <li>N2O for protocols;</li>
                  <li>KVX for data storage;</li>
-                 <li>and COWBOY for web server.</li>
-                 </ul>
-            </div>
-            <div>Acknoledgments are being delivered with QoS=0 with
-                 transactional sync replication, that delivers diff updates during feed opening.
-                 It also contains simple textual WebSocket protocol for debugging purposes.
-                 You can freely use this example with your favourite formatter for user terminal protocol.
-            </div>
+                 <li>and COWBOY for the web server.</li>
+             </div>
+                <div>and COWBOY for the web server.
+                Acknowledgments are being delivered with QoS=0 with
+                transactional sync replication, that delivers diff
+                updates during feed opening. It also contains a simple
+                textual WebSocket protocol for debugging purposes.</div>
+
         </section>
         <section>
             <h3>MODULES</h3>
@@ -67,10 +66,9 @@
     <h3>TXT</h3>
     <p>The implementation is trying to be informative but not excessive,
        it should take care of run-time edge cases but no to stable.
-       Following the poor man's philosophy <b>chat</b> applicatiton tends to
-       scales and perform well even in 100 LOC.
-       Here is what we can achieve even with Erlang/OTP
-       application bootstrapping, <b>cowboy</b> and <b>syn</b> usage.</p>
+       Following the poor man's philosophy CHAT application tends to
+       scales and perform well even in 100 LOC (25% Erlang/OTP bootstrapping,
+       25% websocket protocol, 50% server protoco).</p>
     <figure><code>
  > N2O,3
  < USER 3
