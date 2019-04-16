@@ -5,8 +5,10 @@
 -include_lib("n2o/include/n2o.hrl").
 -compile(export_all).
 
-info({text,<<"N2O,",A/binary>>},R,S) ->
-   n2o:reg({client,string:trim(binary_to_list(A))}),
+info({text,<<"N2O,",X/binary>>},R,S) ->
+   Str = string:trim(binary_to_list(X)),
+   n2o:reg({client,Str}),
+   A = list_to_binary(Str),
    case kvx:get(writer,A) of
         {error,_} -> kvx:save(kvx:writer(A));
         {ok,_} -> skip end,
