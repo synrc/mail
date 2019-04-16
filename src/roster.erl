@@ -11,12 +11,9 @@ start()    -> start(normal,[]).
 start(_,_) -> X = supervisor:start_link({local,roster},roster,[]),
               syn:init(),
               kvx:join(),
-              cowboy:start_tls(http, [{port, port()},
-                     {certfile, code:priv_dir(roster)++"/ssl/fullchain.pem"},
-                     {keyfile, code:priv_dir(roster)++"/ssl/privkey.pem"},
-                     {cacertfile, code:priv_dir(roster)++"/ssl/fullchain.pem"}],
-                      #{ env => #{dispatch => points()} }),
-              [ n2o_pi:start(#pi{module=roster_vnode,table=ring,sup=roster,state=[],name={server,Pos}})
+              cowboy:start_tls(http,n2o_cowboy:env(roster),#{env=>#{dispatch=>points()}}),
+              [ n2o_pi:start(#pi{module=n2o_wsnode,table=ring,
+                                 sup=roster,state=[],name={server,Pos}})
                 || {{_,_},Pos} <- lists:zip(n2o:ring(),lists:seq(1,length(n2o:ring()))) ],
               X.
 points()   -> cowboy_router:compile([{'_', [{"/[...]",n2o_cowboy2,[] } ]}]).
