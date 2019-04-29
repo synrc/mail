@@ -1,0 +1,11 @@
+ROSTER DEFINITIONS IMPLICIT TAGS ::= BEGIN
+
+    MUC ::= SEQUENCE { name OCTET STRING }
+    P2P ::= SEQUENCE { from OCTET STRING, to OCTET STRING }
+    Ack ::= SEQUENCE { id INTEGER, table OCTET STRING }
+    Bin ::= SEQUENCE { id OCTET STRING, mime OCTET STRING, payload OCTET STRING }
+    Typ ::= ENUMERATED { new(0), edit (1), delete(2) }
+    Adr ::= CHOICE { room MUC, chat [0] IMPLICIT P2P }
+    Msg ::= SEQUENCE { id INTEGER, feed Adr, files SET OF Bin, type Typ }
+
+END

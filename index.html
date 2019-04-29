@@ -1,0 +1,133 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="Maxim Sokhatsky" />
+    <title>CHAT</title>
+    <link rel="stylesheet" href="https://synrc.space/synrc.css?v=2" />
+</head>
+<body>
+<nav>
+    <a href='https://n2o.space'>SPACE</a>
+    <a href='https://chat.n2o.space' style="background:#ededed;">CHAT</a>
+    <a href='https://n2o.im'>SERVICE</a>
+</nav>
+<header>
+    <a href="https://github.com/synrc/chat"><img src="https://synrc.space/images/Synrc Neo.svg?v=1"></a>
+    <h1>CHAT</h1>
+</header>
+<aside>
+    <article>
+        <section>
+            <h3>SYNOPSIS</h3>
+            <div>CHAT is a QoS=1 one-directional (client to server) example of a messaging system built on top of:</div>
+            <div>
+                 <ul>
+                 <li>SYN for publish-subscribe message queue;
+                 <li>N2O for protocols;</li>
+                 <li>KVX for data storage;</li>
+                 <li>and COWBOY for the web server.</li>
+             </div>
+                <div>
+                Acknowledgments are being delivered with QoS=0 with
+                transactional sync replication, that delivers diff
+                updates during feed opening. It also contains a simple
+                textual WebSocket protocol for debugging purposes.</div>
+
+        </section>
+        <section>
+            <h3><a href="https://n2o.dev">MODULES</a></h3>
+            <div><ul>
+           <li><a href="man/chat.htm">CHAT</a></font></li>
+           <li><a href="man/chat_client.htm">CLIENT</a></font></li>
+           <li><a href="man/chat_server.htm">SERVER</a></font></li>
+            </ul></div>
+            <br>
+            <div>
+                APR 2019 &copy; <a href="https://github.com/5HT">Namdak Tonpa</a> ISC<br>
+                VER 3.4
+            </div>
+        </section>
+        <section>
+        <figure>
+        <code>
+ $ wscat -c wss://n2o.im
+        </code>
+        </figure>
+        </section>
+    </article>
+</aside>
+<main>
+    <section>
+
+    <h3>TXT</h3>
+    <p>The implementation of TXT CHAT protocol is trying to be informative but
+       not excessive, it should take care of run-time edge
+       cases but not too stable.
+     </p>
+    <figure><code>
+ $ wscat -c wss://n2o.im
+ > HELP
+ < N2O &lt;user&gt;
+ | SEND &lt;user&gt; &lt;msg&gt;
+ | BOX
+ | CUT &lt;id&gt;.
+ > N2O maxim
+ < USER maxim
+ > SEND vlad HELO
+ < ERROR user doesn't exist.
+ > N2O vlad
+ < USER vlad
+ > SEND maxim OK
+ < NOTIFY vlad:maxim:1556151953113322286:OK
+ < ACK "1556151953113322286"
+ > N2O maxim
+ < USER maxim
+ > BOX
+ < LIST
+ vlad:maxim:1556151953113322286:OK
+ > SEND maxim this is me
+ < NOTIFY maxim:maxim:1556152151055371152:this is me
+ < ACK "1556152151055371152"
+ > SEND maxim back again
+ < NOTIFY maxim:maxim:1556152157283311935:back again
+ < ACK "1556152157283311935"
+ > BOX
+ < LIST
+ vlad:maxim:1556151953113322286:OK
+ maxim:maxim:1556152151055371152:this is me
+ maxim:maxim:1556152157283311935:back again
+ > CUT 1556152157283311935
+ < ERASED 3
+ > BOX
+ < LIST
+ >
+    </code></figure>
+    </section>
+
+    <section>
+       <h3>ERLANG</h3>
+       <p>CHAT supports <a href="https://rocksdb.org">RocksDB</a> and <a href="http://erlang.org/doc/man/mnesia.html">Mnesia</a> databases.
+          KVX differs in writing feeds to them so both cases are covered in the example.</p>
+    </section>
+
+    <section>
+        <a name=plugin><h3>CONTRIBUTORS</h3></a>
+        <div>
+        <ul>
+           <li><a href="https://github.com/5HT">5HT</a> &mdash; Namdak Tonpa</li>
+           <li><a href="https://github.com/proger">proger</a> &mdash; Vlad Ki</li>
+           <li><a href="https://github.com/doxtop">doxtop</a> &mdash; Andrii Zadorozhnii</li>
+           <li><a href="https://github.com/cryoflamer">cryoflamer</a> &mdash; Yuri Maslovsky</li>
+           <li><a href="https://github.com/qomputer">qomputer</a> &mdash; Igor Kharin</li>
+        </ul></div>
+        <br><br>
+    </section>
+</main>
+<footer>
+    Made with <span class="heart">❤</span> to N2O
+</footer>
+</body>
+</html>
