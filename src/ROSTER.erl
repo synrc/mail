@@ -4,7 +4,7 @@
 -module('ROSTER').
 -compile(nowarn_unused_vars).
 -dialyzer(no_improper_lists).
--include("ROSTER.hrl").
+-include("message.hrl").
 -asn1_info([{vsn,'5.0.8'},
             {module,'ROSTER'},
             {options,[per,{i,"."}]}]).
