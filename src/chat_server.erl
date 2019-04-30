@@ -2,7 +2,6 @@
 -include_lib("n2o/include/n2o.hrl").
 -include("message.hrl").
 -compile(export_all).
--compile({parse_transform, bert_swift}).
 
 info(#'Cut'{id=Id}, R, #cx{session = From} = S) ->
    kvx:cut(From,Id),
