@@ -2,6 +2,7 @@ ROSTER DEFINITIONS IMPLICIT TAGS ::= BEGIN
 
     MUC ::= SEQUENCE { name OCTET STRING }
     P2P ::= SEQUENCE { from OCTET STRING, to OCTET STRING }
+    Cut ::= SEQUENCE { feed OCTET STRING, id OCTET STRING }
     Ack ::= SEQUENCE { id INTEGER, table OCTET STRING }
     Bin ::= SEQUENCE { id OCTET STRING, mime OCTET STRING, payload OCTET STRING }
     Typ ::= ENUMERATED { new(0), edit (1), delete(2) }

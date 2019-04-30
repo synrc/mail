@@ -9,6 +9,8 @@
 -record('Bin', { id        = [] :: binary(),
                  mime      = <<"text">> :: binary(),
                  payload   = [] :: binary()}).
+-record('Cut', { feed      = <<>> :: binary(),
+                 id        = <<>> :: binary()}).
 -record('Msg', { id        = [] :: [] | integer(),
                  feed      = [] :: [] | #'MUC'{} | #'P2P'{},
                  files     = [] :: list(#'Bin'{}),
