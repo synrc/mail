@@ -9,7 +9,7 @@ Features
 
 * Database Support: FS, MNESIA, ROCKSDB
 * MQ Support: GPROC, SYN
-* Formatters Support: BERT, JSON, TEXT
+* Formatters Support: TXT, BERT, BER/DER/PER [ASN.1]
 * Size: 80 LOC
 
 Intro
