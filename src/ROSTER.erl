@@ -4,7 +4,7 @@
 -module('ROSTER').
 -compile(nowarn_unused_vars).
 -dialyzer(no_improper_lists).
--include("message.hrl").
+-include("ROSTER.hrl").
 -asn1_info([{vsn,'5.0.8'},
             {module,'ROSTER'},
             {options,[ber,{i,"."}]}]).
@@ -208,20 +208,15 @@ enc_Cut(Val) ->
     enc_Cut(Val, [<<48>>]).
 
 enc_Cut(Val, TagIn) ->
-{_,Cindex1,Cindex2} = Val,
+{_,Cindex1} = Val,
 
 %%-------------------------------------------------
-%% attribute feed(1) with type OCTET STRING
+%% attribute id(1) with type OCTET STRING
 %%-------------------------------------------------
    {EncBytes1,EncLen1} = encode_restricted_string(Cindex1, [<<4>>]),
 
-%%-------------------------------------------------
-%% attribute id(2) with type OCTET STRING
-%%-------------------------------------------------
-   {EncBytes2,EncLen2} = encode_restricted_string(Cindex2, [<<4>>]),
-
-   BytesSoFar = [EncBytes1, EncBytes2],
-LenSoFar = EncLen1 + EncLen2,
+   BytesSoFar = [EncBytes1],
+LenSoFar = EncLen1,
 encode_tags(TagIn, BytesSoFar, LenSoFar).
 
 
@@ -235,21 +230,15 @@ dec_Cut(Tlv, TagIn) ->
 Tlv1 = match_tags(Tlv, TagIn),
 
 %%-------------------------------------------------
-%% attribute feed(1) with type OCTET STRING
+%% attribute id(1) with type OCTET STRING
 %%-------------------------------------------------
 [V1|Tlv2] = Tlv1, 
 Term1 = decode_octet_string(V1, [4]),
 
-%%-------------------------------------------------
-%% attribute id(2) with type OCTET STRING
-%%-------------------------------------------------
-[V2|Tlv3] = Tlv2, 
-Term2 = decode_octet_string(V2, [4]),
-
-case Tlv3 of
-[] -> true;_ -> exit({error,{asn1, {unexpected,Tlv3}}}) % extra fields not allowed
+case Tlv2 of
+[] -> true;_ -> exit({error,{asn1, {unexpected,Tlv2}}}) % extra fields not allowed
 end,
-Res1 = {'Cut',Term1,Term2},
+Res1 = {'Cut',Term1},
 Res1.
 
 
