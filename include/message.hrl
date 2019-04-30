@@ -1,6 +1,7 @@
 -ifndef(MESSAGE_HRL).
 -define(MESSAGE_HRL, true).
 
+-record(ftp,     { id=[], sid=[], filename=[], meta=[], size=[], offset=[], block=[], data=[], status=[] }).
 -record('MUC', { name      = [] :: [] | binary() }).
 -record('P2P', { from      = [] :: [] | binary(),
                  to        = [] :: [] | binary() }).
