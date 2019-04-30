@@ -1,12 +1,18 @@
 ROSTER DEFINITIONS IMPLICIT TAGS ::= BEGIN
 
-    MUC ::= SEQUENCE { name OCTET STRING }
-    P2P ::= SEQUENCE { from OCTET STRING, to OCTET STRING }
-    Cut ::= SEQUENCE { id OCTET STRING }
-    Ack ::= SEQUENCE { id INTEGER, table OCTET STRING }
-    Bin ::= SEQUENCE { id OCTET STRING, mime OCTET STRING, payload OCTET STRING }
-    Typ ::= ENUMERATED { new(0), edit (1), delete(2) }
-    Adr ::= CHOICE { room MUC, chat [0] IMPLICIT P2P }
-    Msg ::= SEQUENCE { id INTEGER, feed Adr, files SET OF Bin, type Typ }
+    P2P ::= SEQUENCE { dst OCTET STRING }
+    MUC ::= SEQUENCE { dst OCTET STRING }
+    Adr ::= SEQUENCE { src OCTET STRING, dst CHOICE { muc [0] MUC, p2p [1] P2P } }
+
+    CSR ::= SEQUENCE { der OCTET STRING }
+    CRT ::= SEQUENCE { der OCTET STRING }
+
+    N2O ::= SEQUENCE { tok OCTET STRING }
+    Ack ::= SEQUENCE { lex OCTET STRING }
+    Nak ::= SEQUENCE { key OCTET STRING }
+    Pub ::= SEQUENCE { key OCTET STRING, adr Adr, tag OCTET STRING, bin OCTET STRING }
+    Sub ::= SEQUENCE { key OCTET STRING, adr Adr }
+
+    Msg ::=   CHOICE { n2o [0] N2O, ack [1] Ack, nak [2] Nak, pub [3] Pub, sub [4] Sub }
 
 END

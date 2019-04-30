@@ -1,0 +1,9 @@
+[submodule "priv/clu/.mason"]
+	path = priv/clu/.mason
+	url = https://github.com/mapbox/mason.git
+[submodule "priv/clu/vendor/websocketpp"]
+	path = priv/clu/vendor/websocketpp
+	url = https://github.com/zaphoyd/websocketpp.git
+[submodule "priv/clu/vendor/asio"]
+	path = priv/clu/vendor/asio
+	url = https://github.com/chriskohlhoff/asio.git
