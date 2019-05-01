@@ -22,7 +22,7 @@
     <article>
         <section>
             <h3>SYNOPSIS</h3>
-            <div>CHAT is a QoS=1 one-directional (client to server) example of a messaging system built on top of:</div>
+            <div>CHAT is a QoS=1 example of a messaging system built on top of:</div>
             <div>
                  <ul>
                  <li>SYN for publish-subscribe message queue;
@@ -31,16 +31,14 @@
                  <li>and COWBOY for the web server.</li>
              </div>
                 <div>
-                Acknowledgments are being delivered with QoS=0 with
-                transactional sync replication, that delivers diff
-                updates during feed opening. It also contains a simple
-                textual WebSocket protocol for debugging purposes.</div>
+             CHAT uses WebSocket channels and BER/BERT/TXT formatters.</div>
 
         </section>
         <section>
             <h3><a href="https://n2o.dev">MODULES</a></h3>
             <div><ul>
            <li><a href="man/chat.htm">CHAT</a></font></li>
+           <li><a href="man/chat_ber.htm">BER</a></font></li>
            <li><a href="man/chat_client.htm">CLIENT</a></font></li>
            <li><a href="man/chat_server.htm">SERVER</a></font></li>
             </ul></div>
