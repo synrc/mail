@@ -45,7 +45,6 @@ void on_open(client* c, websocketpp::connection_hdl hdl) {
 // This message handler will be invoked once for each incoming message. It
 // prints the message and then sends a copy of the message back to the server.
 void on_message(client* c, websocketpp::connection_hdl hdl, message_ptr msg) {
-
   std::cout << "on_message called with hdl: " << hdl.lock().get()
             << " and message: " << msg->get_payload()
             << std::endl;
@@ -86,16 +85,14 @@ int main(int argc, char* argv[]) {
       return 0;
     }
 
-    while (1) {
-      // Note that connect here only requests a connection. No network messages are
-      // exchanged until the event loop starts running in the next line.
-      c.connect(con);
+    // Note that connect here only requests a connection. No network messages are
+    // exchanged until the event loop starts running in the next line.
+    c.connect(con);
 
-      // Start the ASIO io_service run loop
-      // this will cause a single connection to be made to the server. c.run()
-      // will exit when this connection is closed.
-      c.run();
-    }
+    // Start the ASIO io_service run loop
+    // this will cause a single connection to be made to the server. c.run()
+    // will exit when this connection is closed.
+    c.run();
   } catch (websocketpp::exception const & e) {
     std::cout << e.what() << std::endl;
   }
