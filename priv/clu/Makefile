@@ -10,8 +10,8 @@ clean:
 run:
 	./build/clu
 
-asn1:
-	cd asn; asn1c ../../src/ROSTER.asn1
+asn: ../../src/ROSTER.asn1
+	mkdir -p asn && cd asn && asn1c ../$< && rm -f Makefile.am.sample converter-sample.c
 
 deps:
-	brew install cmake openssl asn1c
+	brew install cmake openssl asn1c glfw
