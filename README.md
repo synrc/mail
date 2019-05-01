@@ -2,7 +2,7 @@ CHAT: Messaging Protocol
 ========================
 [![Build Status](https://travis-ci.org/synrc/chat.svg?branch=master)](https://travis-ci.org/synrc/chat)
 
-TXT CHAT is a simple mailbox delivery protocol.
+Simple mailbox delivery protocol.
 
 Features
 --------
