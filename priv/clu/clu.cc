@@ -1,21 +1,27 @@
 #include <websocketpp/config/asio_client.hpp>
 #include <websocketpp/client.hpp>
 
+#include <imgui.h>
+
 #include <iostream>
 #include <string>
+#include <thread>
 
 #include <cstdio>
 #include "asn/Msg.h"
 
 using namespace std;
 
-typedef websocketpp::client<websocketpp::config::asio_client> client;
+typedef websocketpp::client<websocketpp::config::asio_tls_client> client;
+typedef websocketpp::lib::shared_ptr<websocketpp::lib::asio::ssl::context> context_ptr;
 
 using websocketpp::lib::placeholders::_1;
 using websocketpp::lib::placeholders::_2;
 using websocketpp::lib::bind;
 
 typedef websocketpp::config::asio_client::message_type::ptr message_ptr;
+
+extern void DoAddLog(string);
 
 struct p {
   client *c;
@@ -40,6 +46,8 @@ void on_open(client* c, websocketpp::connection_hdl hdl) {
   p p{c,hdl};
   der_encode(&asn_DEF_MUC, &muc, send_to_client, &p);
   xer_fprint(stdout, &asn_DEF_MUC, &muc);
+
+  DoAddLog("connection opened.");
 }
 
 // This message handler will be invoked once for each incoming message. It
@@ -49,22 +57,31 @@ void on_message(client* c, websocketpp::connection_hdl hdl, message_ptr msg) {
             << " and message: " << msg->get_payload()
             << std::endl;
 
+#if 0
   websocketpp::lib::error_code ec;
   c->send(hdl, msg->get_payload(), msg->get_opcode(), ec);
   if (ec) {
     std::cout << "Echo failed because: " << ec.message() << std::endl;
   }
+#endif
 }
 
-int main(int argc, char* argv[]) {
-  // Create a client endpoint
+
+context_ptr on_tls_init(const char * hostname, websocketpp::connection_hdl) {
+    context_ptr ctx = websocketpp::lib::make_shared<asio::ssl::context>(asio::ssl::context::sslv23);
+
+    ctx->set_options(asio::ssl::context::default_workarounds |
+                     asio::ssl::context::no_sslv2 |
+                     asio::ssl::context::no_sslv3 |
+                     asio::ssl::context::single_dh_use);
+
+    ctx->set_verify_mode(asio::ssl::verify_none);
+    return ctx;
+}
+
+
+void wsclient(string uri) {
   client c;
-
-  std::string uri = "ws://localhost:9002";
-
-  if (argc == 2) {
-    uri = argv[1];
-  }
 
   try {
     // Set logging to be pretty verbose (everything except message payloads)
@@ -74,7 +91,7 @@ int main(int argc, char* argv[]) {
     // Initialize ASIO
     c.init_asio();
 
-    // Register our message handler
+    c.set_tls_init_handler(bind(&on_tls_init, "hostnamepls", ::_1));
     c.set_open_handler(bind(&on_open,&c,::_1));
     c.set_message_handler(bind(&on_message,&c,::_1,::_2));
 
@@ -82,7 +99,6 @@ int main(int argc, char* argv[]) {
     client::connection_ptr con = c.get_connection(uri, ec);
     if (ec) {
       std::cout << "could not create connection because: " << ec.message() << std::endl;
-      return 0;
     }
 
     // Note that connect here only requests a connection. No network messages are
@@ -96,6 +112,24 @@ int main(int argc, char* argv[]) {
   } catch (websocketpp::exception const & e) {
     std::cout << e.what() << std::endl;
   }
+
+  DoAddLog("client aborted.");
+}
+
+extern int gui(int, char *[]);
+
+int main(int argc, char* argv[]) {
+
+  std::string uri = "wss://192.168.1.18:8042";
+
+  if (argc == 2) {
+    uri = argv[1];
+  }
+
+  thread client(wsclient, uri);
+  client.detach();
+
+  return gui(argc, argv);
 }
 
 
