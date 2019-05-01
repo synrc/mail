@@ -46,5 +46,4 @@ info(#'Ack'{lex=Key}=Ack, R,S) ->
     {reply, {text,<<"ACK ",(chat:bin(Key))/binary>>},R,S};
 
 info(Msg, R,S) ->
-    io:format("UNKNOWN: ~p~n",[Msg]),
     {unknown,Msg,R,S}.
