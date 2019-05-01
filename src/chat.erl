@@ -22,6 +22,7 @@ start(_,_) -> X = supervisor:start_link({local,?MODULE},?MODULE,[]),
                 || {{_,_},Pos} <- lists:zip(n2o:ring(),lists:seq(1,length(n2o:ring()))) ],
               X.
 
+fmt()      -> application:get_env(n2o,formatter,chat_ber).
 bin(Key)   -> list_to_binary(io_lib:format("~p",[Key])).
 user(Id)   -> case kvx:get(writer,Id) of {ok,_} -> true; {error,_} -> false end.
 format_msg(#'Pub'{key=Id,adr=#'Adr'{src=From,dst={p2p,#'P2P'{dst=To}}},bin=P}) ->

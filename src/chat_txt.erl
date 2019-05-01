@@ -1,4 +1,4 @@
--module(chat_client).
+-module(chat_txt).
 -text('TXT CHAT PROTOCOL').
 -include("ROSTER.hrl").
 -include_lib("kvx/include/cursors.hrl").
@@ -45,8 +45,9 @@ info({text,<<"CUT",X/binary>>},R,#cx{session = From}=S) -> % erase the feed by S
                                {error,_} -> {reply,{text,<<"NOT FOUND ">>},R,S} end;
                                        _ -> {reply,{text,<<"ERROR in request.">>},R,S} end;
 
-info({flush,#'Pub'{}=M},R,S)  -> {reply,
-    {text,<<"NOTIFY ",(list_to_binary(chat:format_msg(M)))/binary>>},R,S};
+info({flush,#'Pub'{}=M},R,S)  ->
+    io:format("FLUSH~n"),
+    {reply, {text,<<"NOTIFY ",(list_to_binary(chat:format_msg(M)))/binary>>},R,S};
 
 info({flush,Text},R,S)     -> {reply, {text,Text},R,S};
 info({text,_}, R,S)        -> {reply, {text,<<"Try HELP">>},R,S};
