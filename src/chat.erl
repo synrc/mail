@@ -1,7 +1,7 @@
 -module(chat).
 -behaviour(application).
 -behaviour(supervisor).
--include("message.hrl").
+-include("ROSTER.hrl").
 -include_lib("n2o/include/n2o.hrl").
 -include_lib("kvx/include/metainfo.hrl").
 -compile(export_all).
@@ -10,7 +10,7 @@ stop(_)    -> ok.
 start()    -> start(normal,[]).
 port()     -> application:get_env(n2o,port,8042).
 init([])   -> {ok, {{one_for_one, 5, 10}, [ ] }}.
-metainfo() -> #schema { name=roster, tables=[#table{name='Msg', fields=record_info(fields,'Msg')}]}.
+metainfo() -> #schema { name=roster, tables=[#table{name='Pub', fields=record_info(fields,'Pub')}]}.
 start(_,_) -> X = supervisor:start_link({local,?MODULE},?MODULE,[]),
               syn:init(),
               kvx:join(),

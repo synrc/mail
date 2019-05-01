@@ -7,7 +7,11 @@
 -include("ROSTER.hrl").
 -asn1_info([{vsn,'5.0.8'},
             {module,'ROSTER'},
-            {options,[ber,{i,"."}]}]).
+            {options,[warnings,ber,errors,
+ {cwd,"/Users/maxim/depot/synrc/chat/src"},
+ {outdir,"/Users/maxim/depot/synrc/chat/src"},
+ {i,"."},
+ {i,"/Users/maxim/depot/synrc/chat/src"}]}]).
 
 -export([encoding_rule/0,maps/0,bit_string_format/0,
          legacy_erlang_types/0]).
@@ -16,12 +20,11 @@
 enc_P2P/2,
 enc_MUC/2,
 enc_Adr/2,
-enc_CSR/2,
-enc_CRT/2,
+enc_Cut/2,
 enc_N2O/2,
 enc_Ack/2,
-enc_Nak/2,
 enc_Pub/2,
+enc_Nak/2,
 enc_Sub/2,
 enc_Msg/2
 ]).
@@ -30,12 +33,11 @@ enc_Msg/2
 dec_P2P/2,
 dec_MUC/2,
 dec_Adr/2,
-dec_CSR/2,
-dec_CRT/2,
+dec_Cut/2,
 dec_N2O/2,
 dec_Ack/2,
-dec_Nak/2,
 dec_Pub/2,
+dec_Nak/2,
 dec_Sub/2,
 dec_Msg/2
 ]).
@@ -83,12 +85,11 @@ end.
 encode_disp('P2P', Data) -> enc_P2P(Data);
 encode_disp('MUC', Data) -> enc_MUC(Data);
 encode_disp('Adr', Data) -> enc_Adr(Data);
-encode_disp('CSR', Data) -> enc_CSR(Data);
-encode_disp('CRT', Data) -> enc_CRT(Data);
+encode_disp('Cut', Data) -> enc_Cut(Data);
 encode_disp('N2O', Data) -> enc_N2O(Data);
 encode_disp('Ack', Data) -> enc_Ack(Data);
-encode_disp('Nak', Data) -> enc_Nak(Data);
 encode_disp('Pub', Data) -> enc_Pub(Data);
+encode_disp('Nak', Data) -> enc_Nak(Data);
 encode_disp('Sub', Data) -> enc_Sub(Data);
 encode_disp('Msg', Data) -> enc_Msg(Data);
 encode_disp(Type, _Data) -> exit({error,{asn1,{undefined_type,Type}}}).
@@ -96,12 +97,11 @@ encode_disp(Type, _Data) -> exit({error,{asn1,{undefined_type,Type}}}).
 decode_disp('P2P', Data) -> dec_P2P(Data);
 decode_disp('MUC', Data) -> dec_MUC(Data);
 decode_disp('Adr', Data) -> dec_Adr(Data);
-decode_disp('CSR', Data) -> dec_CSR(Data);
-decode_disp('CRT', Data) -> dec_CRT(Data);
+decode_disp('Cut', Data) -> dec_Cut(Data);
 decode_disp('N2O', Data) -> dec_N2O(Data);
 decode_disp('Ack', Data) -> dec_Ack(Data);
-decode_disp('Nak', Data) -> dec_Nak(Data);
 decode_disp('Pub', Data) -> dec_Pub(Data);
+decode_disp('Nak', Data) -> dec_Nak(Data);
 decode_disp('Sub', Data) -> dec_Sub(Data);
 decode_disp('Msg', Data) -> dec_Msg(Data);
 decode_disp(Type, _Data) -> exit({error,{asn1,{undefined_type,Type}}}).
@@ -291,16 +291,16 @@ case (case Tlv1 of [CtempTlv1] -> CtempTlv1; _ -> Tlv1 end) of
 
 
 %%================================
-%%  CSR
+%%  Cut
 %%================================
-enc_CSR(Val) ->
-    enc_CSR(Val, [<<48>>]).
+enc_Cut(Val) ->
+    enc_Cut(Val, [<<48>>]).
 
-enc_CSR(Val, TagIn) ->
+enc_Cut(Val, TagIn) ->
 {_,Cindex1} = Val,
 
 %%-------------------------------------------------
-%% attribute der(1) with type OCTET STRING
+%% attribute id(1) with type OCTET STRING
 %%-------------------------------------------------
    {EncBytes1,EncLen1} = encode_restricted_string(Cindex1, [<<4>>]),
 
@@ -309,17 +309,17 @@ LenSoFar = EncLen1,
 encode_tags(TagIn, BytesSoFar, LenSoFar).
 
 
-dec_CSR(Tlv) ->
-   dec_CSR(Tlv, [16]).
+dec_Cut(Tlv) ->
+   dec_Cut(Tlv, [16]).
 
-dec_CSR(Tlv, TagIn) ->
+dec_Cut(Tlv, TagIn) ->
    %%-------------------------------------------------
    %% decode tag and length 
    %%-------------------------------------------------
 Tlv1 = match_tags(Tlv, TagIn),
 
 %%-------------------------------------------------
-%% attribute der(1) with type OCTET STRING
+%% attribute id(1) with type OCTET STRING
 %%-------------------------------------------------
 [V1|Tlv2] = Tlv1, 
 Term1 = decode_octet_string(V1, [4]),
@@ -327,48 +327,7 @@ Term1 = decode_octet_string(V1, [4]),
 case Tlv2 of
 [] -> true;_ -> exit({error,{asn1, {unexpected,Tlv2}}}) % extra fields not allowed
 end,
-Res1 = {'CSR',Term1},
-Res1.
-
-
-%%================================
-%%  CRT
-%%================================
-enc_CRT(Val) ->
-    enc_CRT(Val, [<<48>>]).
-
-enc_CRT(Val, TagIn) ->
-{_,Cindex1} = Val,
-
-%%-------------------------------------------------
-%% attribute der(1) with type OCTET STRING
-%%-------------------------------------------------
-   {EncBytes1,EncLen1} = encode_restricted_string(Cindex1, [<<4>>]),
-
-   BytesSoFar = [EncBytes1],
-LenSoFar = EncLen1,
-encode_tags(TagIn, BytesSoFar, LenSoFar).
-
-
-dec_CRT(Tlv) ->
-   dec_CRT(Tlv, [16]).
-
-dec_CRT(Tlv, TagIn) ->
-   %%-------------------------------------------------
-   %% decode tag and length 
-   %%-------------------------------------------------
-Tlv1 = match_tags(Tlv, TagIn),
-
-%%-------------------------------------------------
-%% attribute der(1) with type OCTET STRING
-%%-------------------------------------------------
-[V1|Tlv2] = Tlv1, 
-Term1 = decode_octet_string(V1, [4]),
-
-case Tlv2 of
-[] -> true;_ -> exit({error,{asn1, {unexpected,Tlv2}}}) % extra fields not allowed
-end,
-Res1 = {'CRT',Term1},
+Res1 = {'Cut',Term1},
 Res1.
 
 
@@ -455,47 +414,6 @@ Res1.
 
 
 %%================================
-%%  Nak
-%%================================
-enc_Nak(Val) ->
-    enc_Nak(Val, [<<48>>]).
-
-enc_Nak(Val, TagIn) ->
-{_,Cindex1} = Val,
-
-%%-------------------------------------------------
-%% attribute key(1) with type OCTET STRING
-%%-------------------------------------------------
-   {EncBytes1,EncLen1} = encode_restricted_string(Cindex1, [<<4>>]),
-
-   BytesSoFar = [EncBytes1],
-LenSoFar = EncLen1,
-encode_tags(TagIn, BytesSoFar, LenSoFar).
-
-
-dec_Nak(Tlv) ->
-   dec_Nak(Tlv, [16]).
-
-dec_Nak(Tlv, TagIn) ->
-   %%-------------------------------------------------
-   %% decode tag and length 
-   %%-------------------------------------------------
-Tlv1 = match_tags(Tlv, TagIn),
-
-%%-------------------------------------------------
-%% attribute key(1) with type OCTET STRING
-%%-------------------------------------------------
-[V1|Tlv2] = Tlv1, 
-Term1 = decode_octet_string(V1, [4]),
-
-case Tlv2 of
-[] -> true;_ -> exit({error,{asn1, {unexpected,Tlv2}}}) % extra fields not allowed
-end,
-Res1 = {'Nak',Term1},
-Res1.
-
-
-%%================================
 %%  Pub
 %%================================
 enc_Pub(Val) ->
@@ -570,6 +488,47 @@ Res1.
 
 
 %%================================
+%%  Nak
+%%================================
+enc_Nak(Val) ->
+    enc_Nak(Val, [<<48>>]).
+
+enc_Nak(Val, TagIn) ->
+{_,Cindex1} = Val,
+
+%%-------------------------------------------------
+%% attribute key(1) with type OCTET STRING
+%%-------------------------------------------------
+   {EncBytes1,EncLen1} = encode_restricted_string(Cindex1, [<<4>>]),
+
+   BytesSoFar = [EncBytes1],
+LenSoFar = EncLen1,
+encode_tags(TagIn, BytesSoFar, LenSoFar).
+
+
+dec_Nak(Tlv) ->
+   dec_Nak(Tlv, [16]).
+
+dec_Nak(Tlv, TagIn) ->
+   %%-------------------------------------------------
+   %% decode tag and length 
+   %%-------------------------------------------------
+Tlv1 = match_tags(Tlv, TagIn),
+
+%%-------------------------------------------------
+%% attribute key(1) with type OCTET STRING
+%%-------------------------------------------------
+[V1|Tlv2] = Tlv1, 
+Term1 = decode_octet_string(V1, [4]),
+
+case Tlv2 of
+[] -> true;_ -> exit({error,{asn1, {unexpected,Tlv2}}}) % extra fields not allowed
+end,
+Res1 = {'Nak',Term1},
+Res1.
+
+
+%%================================
 %%  Sub
 %%================================
 enc_Sub(Val) ->
@@ -639,6 +598,8 @@ enc_Msg(Val, TagIn) ->
          'enc_Pub'(element(2,Val), [<<163>>]);
       sub ->
          'enc_Sub'(element(2,Val), [<<164>>]);
+      cut ->
+         'enc_Cut'(element(2,Val), [<<165>>]);
       Else -> 
          exit({error,{asn1,{invalid_choice_type,Else}}})
    end,
@@ -678,6 +639,11 @@ case (case Tlv1 of [CtempTlv1] -> CtempTlv1; _ -> Tlv1 end) of
 %% 'sub'
     {131076, V1} -> 
         {sub, 'dec_Sub'(V1, [])};
+
+
+%% 'cut'
+    {131077, V1} -> 
+        {cut, 'dec_Cut'(V1, [])};
 
       Else -> 
          exit({error,{asn1,{invalid_choice_tag,Else}}})
