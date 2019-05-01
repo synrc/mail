@@ -1,7 +1,6 @@
 -module(chat_ber).
--text('BERT FORMATTER').
--text('BER/ASN.1 FORMATTER').
--text('BER CHAT PROTOCOL').
+-text('BERT/BER/ASN.1 FORMATTER').
+-text('BER/BERT CHAT PROTOCOL').
 -include_lib("kvx/include/cursors.hrl").
 -include("ROSTER.hrl").
 -include_lib("n2o/include/n2o.hrl").
