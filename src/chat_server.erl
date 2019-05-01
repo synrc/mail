@@ -1,4 +1,5 @@
 -module(chat_server).
+-text('VNODE CHAT PROTOCOL').
 -include_lib("n2o/include/n2o.hrl").
 -include("ROSTER.hrl").
 -compile(export_all).
