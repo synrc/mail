@@ -5,5 +5,4 @@ _build/
 Mnesia*/
 rocksdb
 deps
-priv/ssl/*
 
