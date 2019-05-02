@@ -16,4 +16,5 @@ info(#'Pub'{key=Id,adr=#'Adr'{dst={p2p,#'P2P'{dst=To}}}}=Msg, R, S) ->
    {reply,{binary, #'Ack'{lex=Id}},R,S};
 
 info(Msg, R,S) ->
+   io:format("NOT A SERVER~n"),
    {unknown,Msg,R,S}.

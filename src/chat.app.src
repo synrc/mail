@@ -3,7 +3,7 @@
   {description, "CHAT Protocol"},
   {vsn, "3.4"},
   {registered, []},
-  {applications, [kernel, stdlib, cowboy, bert, n2o, kvx]},
+  {applications, [kernel, stdlib, cowboy, n2o, kvx]},
   {mod, { chat, []}},
   {env, []}
  ]}.
