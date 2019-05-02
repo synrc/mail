@@ -51,7 +51,5 @@ info({flush,#'Pub'{}=M},R,S)  ->
 
 info({flush,Text},R,S)     -> {reply, {text,Text},R,S};
 info({text,_}, R,S)        -> {reply, {text,<<"Try HELP">>},R,S};
-info(Msg, R,S)             ->
-   io:format("NOT A TEXT~n"),
-   {unknown,Msg,R,S}.
+info(Msg, R,S)             -> {unknown,Msg,R,S}.
 

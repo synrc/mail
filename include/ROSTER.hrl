@@ -3,7 +3,7 @@
 -record('N2O', { tok       = <<>> :: binary()  }).
 -record('MUC', { dst       = <<>> :: binary()  }).
 -record('P2P', { dst       = <<>> :: binary()  }).
--record('Adr', { src       = <<>> :: integer(), dst = []   :: [] | {atom(),[] | #'P2P'{} | #'MUC'{}} }).
+-record('Adr', { src       = <<>> :: integer(), dst = []   :: [] | {atom(), #'P2P'{} | #'MUC'{}} }).
 -record('Sub', { key       = <<>> :: integer(), adr = []   :: [] | #'Adr'{} }).
 -record('Pub', { key       = <<>> :: integer(), adr = []   :: [] | #'Adr'{},
                  tag       = <<>> :: binary(),  bin = <<>> :: binary() }).

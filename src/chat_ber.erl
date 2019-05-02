@@ -10,13 +10,11 @@ tag(Term) ->
     list_to_atom(string:to_lower(lists:concat([element(1,Term)]))).
 
 encode(Term)       ->
-    io:format("BER ENCODE~n"),
     case 'ROSTER':encode('Msg', {tag(Term), Term}) of
          {ok,Bin} -> Bin;
          {error,_} -> term_to_binary(Term) end.
 
 decode(Bin)        ->
-    io:format("BER DECODE~n"),
     case 'ROSTER':decode('Msg', Bin) of
          {ok,{_,Msg}} -> Msg;
          {error,_} ->
@@ -44,9 +42,7 @@ info(#'Ack'{lex= <<>>}=Msg, R, #cx{session = From} = S) ->
     {reply,{text,<<(list_to_binary(Res))/binary>>},R,S};
 
 info(#'Ack'{lex=Key}=Ack, R,S) ->
-    io:format("BER ACK: ~p~n",[Ack]),
+    io:format("BER ACK: ~p~n",[Msg]),
     {reply, {text,<<"ACK ",(chat:bin(Key))/binary>>},R,S};
 
-info(Msg, R,S) ->
-    io:format("NOT A BER/BERT~n"),
-    {unknown,Msg,R,S}.
+info(Msg, R,S) -> {unknown,Msg,R,S}.

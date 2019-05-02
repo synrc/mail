@@ -15,6 +15,4 @@ info(#'Pub'{key=Id,adr=#'Adr'{dst={p2p,#'P2P'{dst=To}}}}=Msg, R, S) ->
    n2o:send({client,To},{flush,Msg}),
    {reply,{binary, #'Ack'{lex=Id}},R,S};
 
-info(Msg, R,S) ->
-   io:format("NOT A SERVER~n"),
-   {unknown,Msg,R,S}.
+info(Msg, R,S) -> {unknown,Msg,R,S}.
