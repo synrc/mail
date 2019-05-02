@@ -42,7 +42,7 @@ info(#'Ack'{lex= <<>>}=Msg, R, #cx{session = From} = S) ->
     {reply,{text,<<(list_to_binary(Res))/binary>>},R,S};
 
 info(#'Ack'{lex=Key}=Ack, R,S) ->
-    io:format("BER ACK: ~p~n",[Msg]),
+    io:format("BER ACK: ~p~n",[Ack]),
     {reply, {text,<<"ACK ",(chat:bin(Key))/binary>>},R,S};
 
 info(Msg, R,S) -> {unknown,Msg,R,S}.
