@@ -37,8 +37,8 @@
         <section>
             <h3><a href="https://n2o.dev">MODULES</a></h3>
             <div><ul>
-           <li><a href="man/chat_ber.htm">BER</a></font></li>
            <li><a href="man/chat_txt.htm">TXT</a></font></li>
+           <li><a href="man/chat_ber.htm">BER</a></font></li>
            <li><a href="man/chat.htm">CHAT</a></font></li>
            <li><a href="man/chat_server.htm">SERVER</a></font></li>
             </ul></div>
@@ -63,7 +63,8 @@
     <h3>TXT PROTO</h3>
     <p>The implementation of TXT CHAT protocol is trying to be informative but
        not excessive, it should take care of run-time edge
-       cases but not too stable.
+       cases but not too stable. TXT protocol is dedicated
+       for demo purposes and doesn't support file upload and voice calls.
      </p>
     <figure><code>
  $ wscat -c wss://n2o.im
@@ -129,7 +130,7 @@
                        cut [5] Cut }
  END
     </code></figure>
-       <p>CHAT supports <a href="https://rocksdb.org">RocksDB</a> and
+       <p>CHAT is written in Erlang/OTP and supports <a href="https://rocksdb.org">RocksDB</a> or
                         <a href="http://erlang.org/doc/man/mnesia.html">Mnesia</a> databases.</p>
     </section>
     <section>
