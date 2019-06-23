@@ -24,7 +24,7 @@ info({text,<<"SEND",X/binary>>},R,#cx{session = From}=S) -> % send message
                  false -> <<"ERROR user doesn't exist.">>;
                  true  -> % here is feed consistency happens
                           {ring,N} = n2o_ring:lookup(To),
-                          n2o:send({server,N},{publish,self(),From,Msg}),
+                          n2o:send(N,{publish,self(),From,Msg}),
                           <<>> end,
             {reply, {text, Res},R,S};
        _ -> {reply, {text, <<"ERROR in request.">>},R,S} end;
