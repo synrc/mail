@@ -28,8 +28,9 @@ info({text,<<"SEND",X/binary>>},R,#cx{session = From}=S) -> % send message
        _ -> {reply, {text, <<"ERROR in request.">>},R,S} end;
 
 info({text,<<"BOX">>},R,#cx{session = From}=S) -> % print the feed
-    kvs:ensure(#writer{id="/chat/"++From}),
-    Fetch = (kvs:take((kvs:reader("/chat/"++From))#reader{args=-1}))#reader.args,
+    Key = "/chat/"++From,
+    kvs:ensure(#writer{id=Key}),
+    Fetch = kvs:head(Key,10),
     Res = "LIST\n" ++ string:join([ chat:format_msg(M) || M <- lists:reverse(Fetch) ],"\n"),
     {reply,{text,<<(list_to_binary(Res))/binary>>},R,S};
 
