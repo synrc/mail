@@ -1,7 +1,7 @@
 -module(chat_ber).
 -text('BERT/BER/ASN.1 FORMATTER').
 -text('BER/BERT CHAT PROTOCOL').
--include_lib("kvx/include/cursors.hrl").
+-include_lib("kvs/include/cursors.hrl").
 -include("ROSTER.hrl").
 -include_lib("n2o/include/n2o.hrl").
 -export([encode/1,decode/1,info/3]).
@@ -24,7 +24,7 @@ decode(Bin)        ->
 info(#'N2O'{tok=Key}=Msg, R, S) ->
     A = string:trim(binary_to_list(Key)),
     n2o:reg({client,A}),
-    kvx:ensure(#writer{id=A}),
+    kvs:ensure(#writer{id=A}),
     io:format("BER N2O: ~p~n",[Msg]),
     {reply, {chat:fmt(), Msg},R,S#cx{session = A}};
 
@@ -36,8 +36,8 @@ info(#'Pub'{adr=#'Adr'{src=From,dst={p2p,#'P2P'{dst=To}}}}=Msg, R, S) ->
 
 info(#'Ack'{lex= <<>>}=Msg, R, #cx{session = From} = S) ->
     io:format("BER BOX: ~p~n",[Msg]),
-    kvx:ensure(#writer{id=From}),
-    Fetch = (kvx:take((kvx:reader(From))#reader{args=-1}))#reader.args,
+    kvs:ensure(#writer{id=From}),
+    Fetch = (kvs:take((kvs:reader(From))#reader{args=-1}))#reader.args,
     Res = "LIST\n" ++ string:join([ chat:format_msg(M) || M <- lists:reverse(Fetch) ],"\n"),
     {reply,{text,<<(list_to_binary(Res))/binary>>},R,S};
 
