@@ -1,24 +1,11 @@
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="Maxim Sokhatsky" />
-    <title>CSR</title>
-    <link rel="stylesheet" href="https://synrc.space/synrc.css" />
-</head>
-<body>
-<nav>
-    <a href='https://n2o.space'>SPACE</a>
-    <a href='https://chat.n2o.space'>CHAT</a>
-    <a href='#' style="background:#ededed;">CSR</a>
-</nav>
-<header>
-    <a href="../index.html"><img src="https://n2o.space/img/Synrc Neo.svg"></a>
+<html><head><meta charset="utf-8" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="" /><meta name="author" content="Maxim Sokhatsky" /><title>CSR</title><link rel="stylesheet" href="https://synrc.space/synrc.css" /></head><body><nav>
+    <a href="https://n2o.space">SPACE</a>
+    <a href="https://chat.n2o.space">CHAT</a>
+    <a href="#" style="background:#ededed;">CSR</a>
+</nav><header>
+    <a href="../index.html"><img src="https://n2o.space/img/Synrc Neo.svg" /></a>
     <h1>CSR</h1>
-</header>
-<main>
+</header><main>
     <section>
 
 <h3>PKCS-10 CSR</h3>
@@ -61,8 +48,8 @@
       ... -- add any locally defined attributes here -- }
 
   Attribute { ATTRIBUTE:IOSet } ::= SEQUENCE {
-      type   ATTRIBUTE.&id({IOSet}),
-      values SET SIZE(1..MAX) OF ATTRIBUTE.&Type({IOSet}{@type})}
+      type   ATTRIBUTE.&#38;id({IOSet}),
+      values SET SIZE(1..MAX) OF ATTRIBUTE.&#38;Type({IOSet}{@type})}
 
   CertificationRequest ::= SEQUENCE {
       certificationRequestInfo  CertificationRequestInfo,
@@ -76,11 +63,6 @@
   END
     </code></figure>
     </section>
-</main>
-
-<footer>
-    2005&mdash;2019 &copy; Synrc Research Center
-</footer>
-
-</body>
-</html>
+</main><footer>
+    2005—2019 © Synrc Research Center
+</footer></body></html>
