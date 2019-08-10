@@ -23,7 +23,7 @@ info({text,<<"SEND",X/binary>>},R,#cx{session = From}=S) -> % send message
            Msg = #'Pub'{key=Key,adr=#'Adr'{src=From,dst={p2p,#'P2P'{dst=To}}},bin=iolist_to_binary(string:join(Rest," "))},
            Res = case chat:user(To) of
                  false -> <<"ERROR user doesn't exist.">>;
-                 true  -> n2o_ring:send(ws, {publish, self(), From, Msg}), <<>> end,
+                 true  -> n2o_ring:send(ws, chat, {publish, self(), From, Msg}), <<>> end,
             {reply, {text, Res},R,S};
        _ -> {reply, {text, <<"ERROR in request.">>},R,S} end;
 
