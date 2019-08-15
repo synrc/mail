@@ -5,6 +5,14 @@
 -compile(nowarn_unused_vars).
 -dialyzer(no_improper_lists).
 -include("ROSTER.hrl").
+-asn1_info([{vsn,'4.0.4'},
+            {module,'ROSTER'},
+            {options,[warnings,ber,errors,
+ {cwd,"/Users/maxim/depot/synrc/apps/erlang/chat/src"},
+ {outdir,"/Users/maxim/depot/synrc/apps/erlang/chat/src"},
+ {i,"."},
+ {i,"/Users/maxim/depot/synrc/apps/erlang/chat/src"}]}]).
+
 -export([encoding_rule/0,bit_string_format/0,
          legacy_erlang_types/0]).
 -export(['dialyzer-suppressions'/1]).
