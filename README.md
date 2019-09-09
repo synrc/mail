@@ -1,6 +1,7 @@
 CHAT: Messaging Protocol
 ========================
 [![Build Status](https://travis-ci.org/synrc/chat.svg?branch=master)](https://travis-ci.org/synrc/chat)
+[![Hex pm](http://img.shields.io/hexpm/v/chat.svg?style=flat)](https://hex.pm/packages/chat)
 
 Simple mailbox delivery protocol.
 
