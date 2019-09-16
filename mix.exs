@@ -14,15 +14,16 @@ defmodule CHAT.Mixfile do
   end
 
   defp package do
-    [files: ["include", "priv", "src", "LICENSE", "README.md", "rebar.config", "sys.config", "vm.args"],
-     licenses: ["MIT"],
+    [files: ~w(include priv src LICENSE rebar.config sys.config vm.args),
+     licenses: ["ISC"],
      maintainers: ["Namdak Tonpa","Vladimir Kirillov"],
      name: :chat,
      links: %{"GitHub" => "https://github.com/synrc/chat"}]
   end
 
   defp deps do
-     [{:cowboy, "~> 2.5"},
+     [{:ex_doc, "~> 0.11", only: :dev},
+      {:cowboy, "~> 2.5"},
       {:rocksdb, "~> 1.3.2"},
       {:syn, "~> 1.6.3"},
       {:n2o, "~> 6.8.1"},
