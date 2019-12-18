@@ -27,7 +27,7 @@ It also contains simple textual WebSocket protocol for debugging purposes.
 You can freely use this example with your favourite formatter for user terminal protocol.
 
 ```shell
-$ wscat -c wss://n2o.im
+$ wscat --no-check -c wss://localhost:8042/ws
 > HELP
 < N2O <user>
 | SEND <user> <msg>
