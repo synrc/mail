@@ -1,6 +1,8 @@
 *.c linguist-detectable=false
+*.h linguist-detectable=false
 *.cc linguist-detectable=false
 *.cpp linguist-detectable=false
+*.hpp linguist-detectable=false
 *.html linguist-detectable=false
 *.htm linguist-detectable=false
 *.js linguist-detectable=false
