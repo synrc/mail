@@ -5,4 +5,5 @@
 *.html linguist-detectable=false
 *.htm linguist-detectable=false
 *.js linguist-detectable=false
+*.cmake linguist-detectable=false
 Makefile linguist-detectable=false
