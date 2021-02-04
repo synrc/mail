@@ -8,3 +8,4 @@
 *.js linguist-detectable=false
 *.cmake linguist-detectable=false
 Makefile linguist-detectable=false
+CMakeLists.txt linguist-detectable=false
