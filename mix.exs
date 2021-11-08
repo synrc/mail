@@ -24,9 +24,9 @@ defmodule CHAT.Mixfile do
   defp deps do
      [{:ex_doc, "~> 0.11", only: :dev},
       {:cowboy, "~> 2.5"},
-      {:rocksdb, "~> 1.3.2"},
+      {:rocksdb, "~> 1.6.0"},
       {:syn, "~> 1.6.3"},
-      {:n2o, "~> 6.8.1"},
-      {:kvs, "~> 6.7.7"}]
+      {:n2o, "~> 8.8.1"},
+      {:kvs, "~> 8.10.4"}]
   end
 end
