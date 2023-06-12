@@ -1,5 +1,5 @@
-MAIL: Message Delivery System
-=============================
+SYNRC ✉️ MAIL
+=============
 
 Simple mailbox delivery protocol.
 
