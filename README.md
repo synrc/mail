@@ -1,26 +1,25 @@
-CHAT: Messaging Protocol
-========================
-[![Hex pm](http://img.shields.io/hexpm/v/mail.svg?style=flat)](https://hex.pm/packages/mail)
+MAIL: Message Delivery System
+=============================
 
 Simple mailbox delivery protocol.
 
 Features
 --------
 
-* Database Support: FS, MNESIA, ROCKSDB
-* MQ Support: GPROC, SYN
-* Formatters Support: TXT, BERT, BER/DER/PER [ASN.1]
+* Databases: MNESIA, ROCKSDB
+* Pub/Sub GPROC, SYN
+* Formatters TXT, BERT, BER/DER/PER [ASN.1]
 * Size: 80 LOC
 
 Intro
 -----
 
-CHAT is an QoS=1 example of messaging system built on top of:
+MAIL is an QoS=1 example of messaging system built on top of:
 
 * SYN for publish subscribe message queue;
 * N2O for protocols;
-* KVX for data storage;
-* and COWBOY for web server.
+* KVS for data storage;
+* COWBOY for web server.
 
 It also contains simple textual WebSocket protocol for debugging purposes.
 You can freely use this example with your favourite formatter for user terminal protocol.
