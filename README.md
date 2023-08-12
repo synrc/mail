@@ -1,15 +1,23 @@
 SYNRC ✉️ MAIL
 =============
 
-Simple mailbox delivery protocol.
+Open source lightweight Messaging Handling Service (MHS X.419)
+and Interpersonal Messaging System (IPMS X.420).
+MHS was a very open system, it was popular in the
+early 1990s as a glue between proprietary
+email systems, competing standards-based SMTP and X.400.
+However, by 1996 it was clear that SMTP over the Internet
+would take over this role. However MHS/IPMS is a faster
+and has more telecomunication flavour than SMTP track of standards.
+Now MHS is used in avionics and in Military Message Handling
+System (MMHS, RFC 6477).
 
 Features
 --------
 
 * Databases: MNESIA, ROCKSDB
 * Pub/Sub GPROC, SYN
-* Formatters TXT, BERT, BER/DER/PER [ASN.1]
-* Size: 80 LOC
+* Formatters BASE64, BERT, BER/DER/PER [ASN.1]
 
 Intro
 -----
@@ -19,48 +27,12 @@ MAIL is an QoS=1 example of messaging system built on top of:
 * SYN for publish subscribe message queue;
 * N2O for protocols;
 * KVS for data storage;
-* COWBOY for web server.
+* ASN1 for encoding.
 
 It also contains simple textual WebSocket protocol for debugging purposes.
 You can freely use this example with your favourite formatter for user terminal protocol.
 
 ```shell
-$ wscat --no-check -c wss://localhost:8042/ws
-> HELP
-< N2O <user>
-| SEND <user> <msg>
-| BOX
-| CUT <id>.
-> N2O maxim
-< USER maxim
-> SEND vlad HELO
-< ERROR user doesn't exist.
-> N2O vlad
-< USER vlad
-> SEND maxim OK
-< NOTIFY vlad:maxim:1556151953113322286:OK
-< ACK "1556151953113322286"
-> N2O maxim
-< USER maxim
-> BOX
-< LIST
-vlad:maxim:1556151953113322286:OK
-> SEND maxim this is me
-< NOTIFY maxim:maxim:1556152151055371152:this is me
-< ACK "1556152151055371152"
-> SEND maxim back again
-< NOTIFY maxim:maxim:1556152157283311935:back again
-< ACK "1556152157283311935"
-> BOX
-< LIST
-vlad:maxim:1556151953113322286:OK
-maxim:maxim:1556152151055371152:this is me
-maxim:maxim:1556152157283311935:back again
-> CUT 1556152157283311935
-< ERASED 3
-> BOX
-< LIST
->
 ```
 
 Documentation

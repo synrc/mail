@@ -2,31 +2,29 @@ defmodule CHAT.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :chat,
-     version: "5.11.0",
-     description: "CHAT Protocol",
-     package: package(),
-     deps: deps()]
+    [ app: :mail,
+      version: "7.8.0",
+      description: "MAIL IPMS MHS Protocol",
+      package: package(),
+      deps: deps()]
   end
 
   def application do
-     [mod: {:chat, []}, applications: [:ranch, :cowboy, :kvs, :syn, :n2o]]
+    [ mod: {:chat, []}, applications: [:kvs, :syn, :n2o, :mnesia]]
   end
 
-  defp package do
-    [files: ~w(include priv src LICENSE rebar.config sys.config vm.args),
-     licenses: ["ISC"],
-     maintainers: ["Namdak Tonpa","Vladimir Kirillov"],
-     name: :chat,
-     links: %{"GitHub" => "https://github.com/synrc/chat"}]
+  def package do
+    [ files: ~w(include priv src LICENSE mix.exs README.md),
+      licenses: ["ISC"],
+      maintainers: ["Namdak Tonpa"],
+      name: :mail420,
+      links: %{"GitHub" => "https://github.com/synrc/mail"}]
   end
 
-  defp deps do
-     [{:ex_doc, "~> 0.11", only: :dev},
-      {:cowboy, "~> 2.5"},
-      {:rocksdb, "~> 1.6.0"},
-      {:syn, "~> 1.6.3"},
-      {:n2o, "~> 8.8.1"},
-      {:kvs, "~> 8.10.4"}]
+  def deps do
+    [ {:ex_doc, "~> 0.11", only: :dev},
+      {:syn, "~> 2.1.1"},
+      {:n2o, "~> 10.8.2"},
+      {:kvs, "~> 10.8.2"}]
   end
 end

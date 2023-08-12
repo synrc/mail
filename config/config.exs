@@ -11,6 +11,6 @@ config :n2o,
   protocols: [:n2o_heart, :chat_txt]
 
 config :kvs,
-  dba: :kvs_rocks,
-  dba_st: :kvs_st,
+  dba: :kvs_mnesia,
+  dba_st: :kvs_stream,
   schema: [:kvs, :kvs_stream, :chat]

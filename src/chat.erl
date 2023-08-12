@@ -12,9 +12,9 @@ start()    -> start(normal,[]).
 port()     -> application:get_env(n2o,port,8042).
 init([])   -> {ok, {{one_for_one, 5, 10}, [ ] }}.
 metainfo() -> #schema { name=roster, tables=[#table{name='Pub', fields=record_info(fields,'Pub')}]}.
-points()   -> cowboy_router:compile([{'_', [{ "/ws/[...]", n2o_cowboy, []}]}]).
+%points()   -> cowboy_router:compile([{'_', [{ "/ws/[...]", n2o_cowboy, []}]}]).
 start(_,_) -> kvs:join(),
-              cowboy:start_clear(http,[{port,port()}],#{env=>#{dispatch=>points()}}),
+%              cowboy:start_clear(http,[{port,port()}],#{env=>#{dispatch=>points()}}),
               X = supervisor:start_link({local,?MODULE},?MODULE,[]),
               n2o:start_ws(),
               X.
