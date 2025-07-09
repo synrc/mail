@@ -1,6 +1,5 @@
-CHAT: Messaging Protocol
-========================
-[![Hex pm](http://img.shields.io/hexpm/v/mail.svg?style=flat)](https://hex.pm/packages/mail)
+MAIL: Delivery Protocol
+=======================
 
 Simple mailbox delivery protocol.
 
