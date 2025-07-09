@@ -1,24 +1,24 @@
 <html><head><meta charset="utf-8" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="" />
-<meta name="author" content="Maxim Sokhatsky" /><title>CHAT</title>
+<meta name="author" content="Maxim Sokhatsky" /><title>MAIL</title>
     <link rel="stylesheet" href="https://n2o.dev/blank.css" />
     <link rel="stylesheet" href="https://n2o.dev/zima.css" />
 </head><body><nav>
     <a href="https://n2o.dev">DEV</a>
-    <a href="https://chat.n2o.dev" style="background:#ededed;">CHAT</a>
+    <a href="https://chat.n2o.dev" style="background:#ededed;">MAIL</a>
 </nav><header>
     <a href="https://github.com/synrc/chat"><img src="https://openmoji.org/data/color/svg/E248.svg" /></a>
-    <h1>CHAT</h1>
+    <h1>MAIL</h1>
 </header><aside>
     <article>
         <section>
             <h3>SYNOPSIS</h3>
-            <div>CHAT is a simple mailbox delivery system consists of:</div>
+            <div>MAIL is a simple mailbox delivery system consists of:</div>
             <div>
                  <ul><li>SYN for publish-subscribe message queue;
                  </li><li>N2O for protocols;</li><li>KVX for data storage;</li><li>and COWBOY for the web server.</li></ul></div>
                 <div>
-             CHAT uses WebSocket server and BER/BERT/TXT channel formatters.</div><br/>
+             MAIL uses WebSocket server and BER/BERT/TXT channel formatters.</div><br/>
 
         <!--figure>
         <code> $ wscat -c wss://n2o.im</code>
@@ -26,7 +26,7 @@
         </section>
         <section>
             <h3><a href="https://n2o.dev">MODULES</a></h3>
-            <div><ul><li><a href="man/chat_txt.htm">TXT</a></li><li><a href="man/chat_ber.htm">BER</a></li><li><a href="man/chat.htm">CHAT</a></li><li><a href="man/chat_server.htm">SERVER</a></li><li><a href="man/csr.htm">CSR</a></li></ul></div>
+            <div><ul><li><a href="man/chat_txt.htm">TXT</a></li><li><a href="man/chat_ber.htm">BER</a></li><li><a href="man/chat.htm">MAIL</a></li><li><a href="man/chat_server.htm">SERVER</a></li><li><a href="man/csr.htm">CSR</a></li></ul></div>
             <br />
             <div>
                 NOV 2021 © <a href="https://github.com/5HT">5HT</a> <a href="https://github.com/proger">proger</a> ISC<br />
@@ -40,7 +40,7 @@
     <section>
 
     <h3>TXT PROTO</h3>
-    <p>The implementation of TXT CHAT protocol is trying to be informative but
+    <p>The implementation of TXT MAIL protocol is trying to be informative but
        not excessive, it should take care of run-time edge
        cases but not too stable. TXT protocol is dedicated
        for demo purposes and doesn't support file upload and voice calls.
@@ -109,7 +109,7 @@
                        cut [5] Cut }
  END
     </code></figure>
-       <p>CHAT is written in Erlang/OTP and supports <a href="https://rocksdb.org">RocksDB</a> or
+       <p>MAIL is written in Erlang/OTP and supports <a href="https://rocksdb.org">RocksDB</a> or
                         <a href="http://erlang.org/doc/man/mnesia.html">Mnesia</a> databases.</p>
     </section>
     <section>
