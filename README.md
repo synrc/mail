@@ -66,7 +66,7 @@ maxim:maxim:1556152157283311935:back again
 Documentation
 -------------
 
-The project homepage is <a href="https://chat.n2o.dev">chat.n2o.dev</a>.
+The project homepage is <a href="https://mail.n2o.dev">mail.n2o.dev</a>.
 
 Credits
 -------
