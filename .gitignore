@@ -1,8 +1,0 @@
-ebin
-mix.lock
-_build/
-.applist
-Mnesia*/
-rocksdb
-deps
-
