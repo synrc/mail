@@ -1,7 +1,5 @@
-CHAT: Messaging Protocol
-========================
-[![Build Status](https://travis-ci.com/synrc/chat.svg?branch=master)](https://travis-ci.com/synrc/chat)
-[![Hex pm](http://img.shields.io/hexpm/v/chat.svg?style=flat)](https://hex.pm/packages/chat)
+MAIL: Delivery Protocol
+=======================
 
 Simple mailbox delivery protocol.
 
@@ -68,7 +66,7 @@ maxim:maxim:1556152157283311935:back again
 Documentation
 -------------
 
-The project homepage is <a href="https://chat.n2o.dev">chat.n2o.dev</a>.
+The project homepage is <a href="https://mail.n2o.dev">mail.n2o.dev</a>.
 
 Credits
 -------
